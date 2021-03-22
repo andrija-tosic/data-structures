@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LancanaLista", "LancanaList
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DvostrukoLancanaLista", "DvostrukoLancanaLista\DvostrukoLancanaLista.vcxproj", "{72BD29CD-725A-4ED2-9860-AB9C7C004886}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SparseMatrix", "SparseMatrix\SparseMatrix.vcxproj", "{827E6ACA-E969-48DA-8381-F39900DAFA61}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -31,6 +33,14 @@ Global
 		{72BD29CD-725A-4ED2-9860-AB9C7C004886}.Release|x64.Build.0 = Release|x64
 		{72BD29CD-725A-4ED2-9860-AB9C7C004886}.Release|x86.ActiveCfg = Release|Win32
 		{72BD29CD-725A-4ED2-9860-AB9C7C004886}.Release|x86.Build.0 = Release|Win32
+		{827E6ACA-E969-48DA-8381-F39900DAFA61}.Debug|x64.ActiveCfg = Debug|x64
+		{827E6ACA-E969-48DA-8381-F39900DAFA61}.Debug|x64.Build.0 = Debug|x64
+		{827E6ACA-E969-48DA-8381-F39900DAFA61}.Debug|x86.ActiveCfg = Debug|Win32
+		{827E6ACA-E969-48DA-8381-F39900DAFA61}.Debug|x86.Build.0 = Debug|Win32
+		{827E6ACA-E969-48DA-8381-F39900DAFA61}.Release|x64.ActiveCfg = Release|x64
+		{827E6ACA-E969-48DA-8381-F39900DAFA61}.Release|x64.Build.0 = Release|x64
+		{827E6ACA-E969-48DA-8381-F39900DAFA61}.Release|x86.ActiveCfg = Release|Win32
+		{827E6ACA-E969-48DA-8381-F39900DAFA61}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
