@@ -1,0 +1,9 @@
+// Napisati pseudokod operacije za obilazak polja A od N elemenata.
+
+ArrayTraversal(A, N)
+	i <- 0
+	while (i <= N)
+		process(A[i])
+		i += 1
+	end
+// O(n)

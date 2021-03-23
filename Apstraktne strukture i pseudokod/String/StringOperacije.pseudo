@@ -1,0 +1,6 @@
+// Za osnovne operacije za rad sa nizovima napišite naziv i kratak opis šta radi.
+
+Substring(S, I, N) // izdvaja podniz pocev od indeksa i, koji je dugacak N karaktera, O(n)
+Concatenate(S1, S2) // nadovezuje niz S1 nizom S2, O(n)
+PatterMatch(S, P) // nalazi indeks prve pojave uzorak P u nizu S, O(n^2) ili O(n)
+Length(S) // vraca duzinu niza, O(n) ili O(1)

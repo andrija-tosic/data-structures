@@ -1,0 +1,16 @@
+// Zadat je tekst T i uzorak P.
+// Napisati pseudokod operacije za brisanje svih pojava uzorka P u tekstu T.
+
+FindAndDeleteAll(T, P)
+    i <- PatternMatch(T, P)
+    S <- Substring(T, 0, Length(T))
+
+    while (i != null)
+        S1 <- Substring(S, 0, i)
+        S2 <- Substring(S, i + Length(P), Length(S) - (i + length(P)) + 1)
+
+        i <- PatternMatch(S, P)
+    end
+    return S
+
+// O(n^2) ili O(n)

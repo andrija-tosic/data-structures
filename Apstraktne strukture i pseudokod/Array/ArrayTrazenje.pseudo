@@ -1,0 +1,16 @@
+// Dato je polje A od N elementa (celih brojeva), u kome su u prvoj polovini polja (od 1 do N/2)
+// elementi uređeni u rastući poredak, a u drugoj polovini (od (N/2)+1 do N) nisu uređeni, ali su
+// vrednosti veće od vrednosti elemenata u prvoj polovini polja.
+// Napisati pseudokod operacije za traženje elementa E u polju A.
+
+Search(A, N, E)
+    ind <- N/2
+    if (A[ind] = E) then
+        return ind
+    if (A[ind] < E) then
+        ind <- BinarySearch(A, N/2, E) // O(logn)
+        return ind
+    else
+        ind <- ArraySearch(A + N/2 + 1, N - (N/2 + 1), E) // O(n)
+        return ind
+// O(n) + O(logn) = O(n)

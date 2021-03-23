@@ -1,0 +1,42 @@
+Šta je sve neophodno za implementaciju heš tablice?
+1. Memorijski prostor za polje od N elemenata
+2. Implementovana heš funkcija
+3. Implementovane operacije za rad sa heš tablicom (dodavanje, traženje, brisanje)
+
+Koja je namena Heš funkcije?
+Heš funkcija služi da ključ (unos) transformiše (preslika) u indeks heš tablice, ali tako da se
+vrednosti ključeva slučajno distribuiraju u celom opsegu indeksa tablice.
+
+Šta je Kolizija i koji su načini za rešavanje kolizije?
+Kad se dva ključa heširanjem preslikavaju u istu vrednost indeksa, dolazi do kolizije.
+Postoji više načina za rešavanje kolizije:
+1. Otvoreno adresiranje (linearno ili kvadratno traženje, sekundarna heš funkcija)
+2. Ulančavanje sinonima (spoljašnje i unutrašnje)
+
+Šta je faktor popunjenosti i koja je njegova namena?
+Faktor popunjenosti heš tablice FP je odnos broja elemenata u heš tablici i veličine heš tablice.
+Za optimalan rad heš tablice, elementi treba da su slučajno raspoređeni i tablica treba
+da ima faktor popunjenosti od 0.8. Ako je tablica retko popunjena ili skoro puna,
+rad operacija nad heš tablicom se drastično usporava.
+
+Prikazati opšti postupak brisanja podatka sa ključem K iz Heš tablice.
+1. Primena heš funkcije: i <- H(K)
+2. Ako je pozicija na mestu H(K) zauzeta,
+    1. Ako je element pronađen sa istim ključem na izračunatoj lokaciji obeležiti sa DELETED.
+    2. Inače, primeniti traženje po sinonimima
+        1. Menja se vrednost primarne adrese u sekundarnu adresu, i traži se sve dok se ne nađe
+        traženi podatak
+        2. Ako podatak postoji, briše se
+        3. Ako nije pronađen, nema brisanja
+3. Inače, podatak nije pronađen, nema brisanja
+
+Da li je dovoljno element sa ključem K samo obrisati?
+
+Objasniti na koji način se tretira obrisana vrednost kod kasnijih operacija traženja, dodavanja i brisanja.
+Traženje tretira DELETED kao da ćelija sadrži element sa ključem koji se ne poklapa sa traženim.
+Dodavanje tretira DELETED kao da je ćelija prazna i da može da se upiše.
+Brisanje tretira DELETED kao da je ćelija nije zauzeta, i primenjuje traženje po sinonima.
+
+Opisati postupak brisanja zadatog elementa iz Heš tablice HT,
+ako se za pristup podacima se koristi Heš funkcija h(k),
+a za rešavanje kolizije se koristi linearno traženje mesta za sinonime.

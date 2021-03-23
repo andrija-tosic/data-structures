@@ -1,0 +1,19 @@
+// Dato je polje A od N elemenata i polje B od M elemenata (M<N).
+// Napisati pseudokod operacije koja pronalazi redom pozicije elemenata iz polja B u polju A
+// i na mesto tog elementa u polju B upisuje indeks pozicije iz A ili 0 ako ne postoji.
+
+Pozicije(A, N, B, M)
+    j <- 0
+    while (j < M)
+        i <- 0
+        while (i < N and A[i] != B[j])
+            i += 1
+        end
+        if (A[i] = B[j])
+                B[j] <- i
+        else
+            B[j] <- 0
+        j += 1
+    end
+
+// O(m*n) = O(n^2)
