@@ -10,11 +10,20 @@ private:
 	int dimNo;
 public:
 	MDArray(int* d, int n);
+	~MDArray();
 	T& getAt(int* indeksi, int n) { return data[getOffset(indeksi, n)]; }
 	void setAt(T el, int* indeksi, int n) { data[getOffset(indeksi, n)] = el; }
 private:
 	int getOffset(int* indeksi, int n);
 };
+
+template <class T>
+MDArray<T>::~MDArray()
+{
+	delete[] data;
+	delete[] dim;
+	delete[] fact;
+}
 
 template <class T>
 MDArray<T>::MDArray(int* d, int n)
