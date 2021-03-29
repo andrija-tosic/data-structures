@@ -8,10 +8,9 @@
         <li>Jednodimenziona</li>
         <li>Višedimenziona</li>
     </ol>
-        <li>Lančane liste</li>
-    <ol>
-        <li>Stack</li>
-        <li>Red</li>
-        <li>Deque</li>
+    <li>Lančane liste</li>
+    <li>Stack</li>
+    <li>Red</li>
+    <li>Deque</li>
     </ol>
 </ol>
