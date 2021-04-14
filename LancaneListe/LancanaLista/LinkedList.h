@@ -2,8 +2,13 @@
 #include "Node.h"
 #include <iostream>
 using namespace std;
+
 template <typename T>
 class LinkedList {
+
+    template<typename K, typename V>
+    friend class ChainedHashTable;
+
 protected:
     Node<T>* start;
     Node<T>* tail;
@@ -19,6 +24,7 @@ public:
     void DeleteFromTail();
     void DeleteNode(const T& data);
 
+    bool isEmpty() const;
     void Print() const;
     Node<T>* GetLeft(Node<T>* node) const;
     void Swap(Node<T>* node1, Node<T>* node2);
@@ -174,6 +180,11 @@ void LinkedList<T>::DeleteNode(const T& data)
                 //cout << "node " << data << " not found, not deleting" << endl;
         }
     }
+}
+
+template<typename T>
+bool LinkedList<T>::isEmpty() const {
+    return !start;
 }
 
 template <typename T>

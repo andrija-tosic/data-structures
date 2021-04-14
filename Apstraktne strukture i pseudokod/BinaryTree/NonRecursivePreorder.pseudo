@@ -1,0 +1,12 @@
+preOrderN(root)
+    pok <- root
+    while (pok != NULL)
+        visit(pok)
+        if (right(pok) != NULL)
+            push(right(pok))
+        if (left(pok) != NULL)
+            pok <- left(pok)
+        else
+            pok <- pop()
+    end
+end

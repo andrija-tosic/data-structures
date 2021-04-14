@@ -2,8 +2,10 @@
 template <typename T>
 class Node
 {
-	template <typename T>	
+	template<typename T>
 	friend class LinkedList;
+	template<typename K, typename V>
+	friend class ChainedHashTable;
 protected:
 	T info;
 	Node<T>* link;
