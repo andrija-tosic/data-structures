@@ -12,5 +12,8 @@
     <li>Stack</li>
     <li>Red</li>
     <li>Deque</li>
+    <li>Heš tablice</li>
+    <ol>
+        <li>Heš tablice sa spoljašnjem ulančavanjem sinonima</li>
     </ol>
 </ol>
