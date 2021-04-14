@@ -13,4 +13,8 @@
     <li>Red</li>
     <li>Deque</li>
     </ol>
+    <li>Heš tablice</li>
+    <ol>
+        <li>Hash tablice sa spoljašnjim ulančavanjem sinonima</li>
+    </ol>
 </ol>
