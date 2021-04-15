@@ -1,19 +1,31 @@
 # Data structures
 <h3>Strukture podataka</h3>
-<h4>Elektronski fakultet</h4>
-<h4>Sadrzaj</h4>
+<h4>Elektronski fakultet Niš</h4>
+<h4>Sadržaj</h4>
 <ol>
     <li>Polja</li>
-    <ol>
+    <ul>
         <li>Jednodimenziona</li>
         <li>Višedimenziona</li>
-    </ol>
+    </ul>
     <li>Lančane liste</li>
+    <ul>
+        <li>Dinamička implementacija</li>
+        <ul>
+            <li>Jednostruko ulančana sa pokazivačem na kraj liste</li>
+            <li>Dvostruko ulančana sa pokazivačem na kraj liste</li>
+            <li>Retko posegnuta matrica</li>
+        </ul>
+        <li>Statička implementacija</li>
+        <ul>
+            <li>Jednostruko ulančana</li>
+        </ul>
+    </ul>
     <li>Stack</li>
     <li>Red</li>
     <li>Deque</li>
     <li>Heš tablice</li>
-    <ol>
+    <ul>
         <li>Heš tablice sa spoljašnjem ulančavanjem sinonima</li>
-    </ol>
+    </ul>
 </ol>
