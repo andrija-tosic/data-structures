@@ -9,6 +9,9 @@ class HashObject {
 	template<typename K, typename V>
 	friend class ChainedHashTable;
 
+	template<typename K, typename V>
+	friend class OpenScatterTable;
+
 protected:
 	K key;
 	V value;

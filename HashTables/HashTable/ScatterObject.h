@@ -13,6 +13,9 @@ class ScatterObject : public HashObject<K, V> {
 protected:
 	unsigned int status;
 
+	template<typename K, typename V>
+	friend class OpenScatterTable;
+
 public:
 	ScatterObject() : HashObject<K, V>() {
 		status = ScatterObjectStatus::unoccupied;
