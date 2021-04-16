@@ -15,14 +15,16 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="HashTable.h">
+    <ClInclude Include="ChainedScatterTable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="HashObject.h">
+    <ClInclude Include="ChainedScatterObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ScatterObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="ChainedScatterSource.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

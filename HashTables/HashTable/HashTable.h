@@ -7,11 +7,11 @@ protected:
 	unsigned int length;
 	unsigned int count;
 
-	virtual unsigned int f(const int& i) { // primary transformation: int => unsigned int
+	virtual unsigned int f(const int& i) const { // primary transformation: int => unsigned int
 		return abs(i);
 	}
 	
-	virtual unsigned int f(const double& d) { // primary transformation: double => unsigned int
+	virtual unsigned int f(const double& d) const { // primary transformation: double => unsigned int
 		if (d == 0) {
 			return 0;
 		}
@@ -22,7 +22,7 @@ protected:
 		}
 	}
 
-	virtual unsigned int f(char* s) { // primary transformation: string => unsigned int
+	virtual unsigned int f(const char* s) const { // primary transformation: string => unsigned int
 		unsigned int res = 0;
 		unsigned int a = 7; // character is a 7-bit ASCII code
 		for (int i = 0; s[i] != '\0'; i++) {
@@ -31,35 +31,26 @@ protected:
 		return res;
 	}
 
-	virtual unsigned int g(unsigned int i) { // secondary transformation: unsigned int => index
+	virtual unsigned int g(const unsigned int& i) const { // secondary transformation: unsigned int => index
 		return (i + 1) % length;
 	}
 
-	unsigned int hash(const K& key) { // key => index
+	unsigned int hash(const K& key) const { // key => index
 		return g(f(key));
 	}
 
-	unsigned int hash(const HashObject<K, V>& obj) { // key => index
-		return g(f(obj.key));
-	}
-
 public:
-	unsigned int getLength() {
+	unsigned int getLength() const {
 		return length;
 	}
 
-	virtual double getLoadFactor() {
+	virtual double getLoadFactor() const {
 		return (double)count / (double)length;
 	}
 
-	virtual void insert(const HashObject<K, V>& obj) = 0;
 	virtual void insert(const K& key, const V& value) = 0;
 	
-	virtual void withdraw(const HashObject<K, V>& obj) = 0;
-	virtual void withdraw(const K& key) = 0;
+	virtual V withdraw(const K& key) = 0;
 
-	virtual HashObject<K, V> find(const K& key) = 0;
-	virtual bool isInTable(const K& key) = 0;
-
-	virtual void print() = 0;
+	virtual V find(const K& key) const = 0;
 };

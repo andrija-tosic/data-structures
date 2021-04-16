@@ -21,10 +21,9 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{57f4cacc-3334-4bed-b36b-8dafe0f14564}</ProjectGuid>
-    <RootNamespace>HashTables</RootNamespace>
+    <ProjectGuid>{d6f035af-4ca9-441e-935c-7b735d4df8b8}</ProjectGuid>
+    <RootNamespace>ChainedScatterTable</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>HashTable</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -140,9 +139,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="HashObject.h" />
-    <ClInclude Include="HashTable.h" />
-    <ClInclude Include="ScatterObject.h" />
+    <ClInclude Include="ChainedScatterObject.h" />
+    <ClInclude Include="ChainedScatterTable.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="ChainedScatterSource.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

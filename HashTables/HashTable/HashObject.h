@@ -46,7 +46,7 @@ public:
 	}
 
 	friend std::ostream& operator<<(std::ostream& out, const HashObject& obj) {
-		out << "key: " << obj.key << ", value: " << obj.value;
+		obj.print(out);
 		return out;
 	}
 
@@ -62,7 +62,7 @@ public:
 		return key == k;
 	}
 
-	void print() {
-		std::cout << key << "|" << value;
+	void print(std::ostream& out) const {
+		out << key << "|" << value;
 	}
 };
