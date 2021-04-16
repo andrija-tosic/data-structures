@@ -11,15 +11,14 @@ public:
 	ChainedHashTable(unsigned int l);
 	~ChainedHashTable();
 
-	HashObject<K, V> find(const K& key);
+	V find(const K& key) const override;
 	
-	void insert(const HashObject<K, V>& obj);
-	void insert(const K& key, const V& value);
+	void insert(const K& key, const V& value) override;
 
-	void withdraw(const HashObject<K, V>& obj);
-	void withdraw(const K& key);
-	bool isInTable(const K& key);
-	void print();
+	V withdraw(const K& key) override;
+	
+	bool isInTable(const K& key) const;
+	void print() const;
 };
 
 template<typename K, typename V>
@@ -35,7 +34,7 @@ ChainedHashTable<K, V>::~ChainedHashTable() {
 }
 
 template<typename K, typename V>
-HashObject<K, V> ChainedHashTable<K, V>::find(const K& key) {
+V ChainedHashTable<K, V>::find(const K& key) const {
 	unsigned i = this->hash(key);
 	if (!table[i].isEmpty()) {
 		Node<HashObject<K, V>>* temp = table[i].start;
@@ -43,12 +42,12 @@ HashObject<K, V> ChainedHashTable<K, V>::find(const K& key) {
 			temp = temp->link;
 		}
 		if (temp)
-			return temp->info;
+			return temp->info.value;
 		else
-			return HashObject<K, V>();
+			return V();
 	}
 	else
-		return HashObject<K, V>();
+		return V();
 }
 
 
@@ -71,41 +70,22 @@ void ChainedHashTable<K, V>::insert(const K& key, const V& value) {
 }
 
 template<typename K, typename V>
-void ChainedHashTable<K, V>::insert(const HashObject<K, V>& obj) {
-	unsigned i = this->hash(obj);
-	
-	Node<HashObject<K, V>>* node = table[i].start;
-	while (node && node->info.key != obj.key) {
-		node = node->link;
-	}
-	if (node) {
-		node->info.value = obj.value; // replace value if object with given key exists
+V ChainedHashTable<K, V>::withdraw(const K& key) {
+	if (isInTable(key)) {
+		unsigned i = this->hash(key);
+		V to_delete = find(key);
+		this->table[i].DeleteNode(HashObject<K, V>(key, to_delete));
+		this->count--;
+		return to_delete;
 	}
 	else {
-		this->table[i].InsertToTail(obj); // insert if object with given key is not found
-		this->count++;
+		std::cout << "Element with key " << key << " not found, can't withdraw." << std::endl;
+		return V();
 	}
 }
 
 template<typename K, typename V>
-void ChainedHashTable<K, V>::withdraw(const HashObject<K, V>& obj) {
-	if (isInTable(obj.key)) {
-		unsigned i = this->hash(obj);
-		this->table[i].DeleteNode(obj);
-		this->count--;
-	}
-}
-
-template<typename K, typename V>
-void ChainedHashTable<K, V>::withdraw(const K& key) {
-	if (isInTable(key)) {
-		HashObject<K, V> obj = find(key);
-		withdraw(obj);
-	}
-}
-
-template<typename K, typename V>
-bool ChainedHashTable<K, V>::isInTable(const K& key) {
+bool ChainedHashTable<K, V>::isInTable(const K& key) const {
 	unsigned i = this->hash(key);
 	if (!table[i].isEmpty()) {
 		Node<HashObject<K, V>>* temp = table[i].start;
@@ -122,7 +102,7 @@ bool ChainedHashTable<K, V>::isInTable(const K& key) {
 }
 
 template<typename K, typename V>
-void ChainedHashTable<K, V>::print() {
+void ChainedHashTable<K, V>::print() const {
 	for (unsigned i = 0; i < this->length; i++) {
 		if (!table[i].isEmpty()) {
 			table[i].Print();
