@@ -12,9 +12,12 @@ public:
 	~OpenScatterTable();
 
 	unsigned int findUnoccupied(const K& key) const;
-	unsigned int findMatch(const K& key) const;
+
+	unsigned int c(const unsigned int& i) const;
 
 	V find(const K& key) const override;
+	unsigned int find_index(const K& key) const;
+
 	void insert(const K& key, const V& value) override;
 	V withdraw(const K& key) override;
 
@@ -36,46 +39,63 @@ OpenScatterTable<K,V>::~OpenScatterTable() {
 
 template<typename K, typename V>
 unsigned int OpenScatterTable<K, V>::findUnoccupied(const K& key) const {
-	unsigned i = this->hash(key);
-	unsigned t = i;
-	if (table[t].status != ScatterObjectStatus::occupied) {
-		return t;
-	}
-	do {
-		t = this->g(t);
-		if (table[t].status != ScatterObjectStatus::occupied) {
-			return t;
-		}
-	} while (t != i);
-	throw "Table is full.";
-}
-
-template<typename K, typename V>
-unsigned int OpenScatterTable<K, V>::findMatch(const K& key) const {
-	unsigned int t = this->hash(key);
-	for (unsigned i = 0; i < this->length; i++) {
+	if (this->count != this->length) {
+		unsigned h = this->hash(key);
+		unsigned t = h;
 		if (table[t].status == ScatterObjectStatus::unoccupied) {
-			return 0;
-		}
-		else if (table[t].key == key) {
 			return t;
 		}
-		else {
-			t = this->g(t);
+		else { // do secondary search
+			unsigned i = 0;
+			do {
+				t = (this->hash(key) + c(i)) % this->length;
+				if (table[t].status != ScatterObjectStatus::occupied) {
+					return t;
+				}
+				i++;
+			} while (t != h && i < this->length);
 		}
 	}
-	return 0;
+	else {
+		std::cout << "Table is full." << std::endl;
+		return -1;
+	}
 }
 
 template<typename K, typename V>
 V OpenScatterTable<K, V>::find(const K& key) const {
-	unsigned match = this->findMatch(key);
-	if (match >= 1) {
-		return table[match].value;
+	long int t;
+	for (unsigned i = 0; i < this->length; i++) {
+		t = (this->hash(key) + c(i)) % this->length;
+		if (table[t].status == ScatterObjectStatus::unoccupied) {
+			std::cout << "Element with key " << key << " not found." << std::endl;
+			return V();
+		}
+		else if (table[t].key == key) {
+			return table[t].value;
+		}
 	}
-	else {
-		std::cout << "Element with key " << key << " not found." << std::endl;
+	std::cout << "Element with key " << key << " not found." << std::endl;
+	return V();
+}
+
+template<typename K, typename V>
+unsigned int OpenScatterTable<K, V>::find_index(const K& key) const {
+	long int t;
+	for (unsigned i = 0; i < this->length; i++) {
+		t = (this->hash(key) + c(i)) % this->length;
+		if (table[t].status == ScatterObjectStatus::unoccupied) {
+			return -1;
+		}
+		else if (table[t].key == key) {
+			return t;
+		}
 	}
+	return -1;
+}
+template<typename K, typename V>
+unsigned int OpenScatterTable<K, V>::c(const unsigned int& i) const {
+	return i * i; // modified linear probing
 }
 
 template<typename K, typename V>
@@ -98,8 +118,8 @@ V OpenScatterTable<K, V>::withdraw(const K& key) {
 		return V();
 	}
 	else {
-		unsigned match = this->findMatch(key);
-		if (match >= 1) {
+		unsigned match = (this->find_index(key));
+		if (match >= 0 && table[match].status == ScatterObjectStatus::occupied) {
 			V deleted_value = table[match].value;
 			table[match].status = ScatterObjectStatus::deleted;
 			return deleted_value;

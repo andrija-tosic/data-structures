@@ -95,22 +95,20 @@ V ChainedScatterTable<K, V>::withdraw(const K& key) {
 				this->count--;
 				return table[i].value;
 			}
-			else {
-				if (table[i].next == 0) {
+			else if (table[i].next == 0) {
 					table[i].status = ScatterObjectStatus::deleted;
 					this->count--;
 					return table[i].value;
 				}
-				else {
-					unsigned next = table[i].next;
-					table[i] = table[next];
-					table[i].next = table[next].next;
-					V to_delete = table[next].value;
-					table[next] = ChainedScatterObject<K, V>();
-					table[next].status = ScatterObjectStatus::deleted;
-					this->count--;
-					return to_delete;
-				}
+			else {
+				unsigned next = table[i].next;
+				table[i] = table[next];
+				table[i].next = table[next].next;
+				V to_delete = table[next].value;
+				table[next] = ChainedScatterObject<K, V>();
+				table[next].status = ScatterObjectStatus::deleted;
+				this->count--;
+				return to_delete;
 			}
 		}
 	}
