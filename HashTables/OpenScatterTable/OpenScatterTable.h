@@ -95,7 +95,7 @@ unsigned int OpenScatterTable<K, V>::find_index(const K& key) const {
 }
 template<typename K, typename V>
 unsigned int OpenScatterTable<K, V>::c(const unsigned int& i) const {
-	return i * i; // modified linear probing
+	return i * i; // linear probing
 }
 
 template<typename K, typename V>

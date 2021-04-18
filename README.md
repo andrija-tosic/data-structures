@@ -26,7 +26,7 @@
     <li>Deque</li>
     <li>Heš tablice</li>
     <ul>
-        <li>Heš tablice sa spoljašnjem ulančavanjem sinonima</li>
+        <li>Heš tablica sa spoljašnjem ulančavanjem sinonima</li>
         <li>(Rasuta) Heš tablica sa unutrašnjim ulančavanjem sinonima</li>
         <li>(Rasuta) Heš tablica sa otvorenim adresiranjem sinonima</li>
     </ul>

@@ -24,7 +24,7 @@ protected:
 
 	virtual unsigned int f(const char* s) const { // primary transformation: string => unsigned int
 		unsigned int res = 0;
-		unsigned int a = 7; // character is a 7-bit ASCII code
+		unsigned int a = 7;
 		for (int i = 0; s[i] != '\0'; i++) {
 			res = res << a ^ s[i];
 		}
