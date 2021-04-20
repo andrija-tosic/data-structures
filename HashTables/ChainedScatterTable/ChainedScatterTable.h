@@ -36,7 +36,7 @@ ChainedScatterTable<K, V>::~ChainedScatterTable() {
 template<typename K, typename V>
 V ChainedScatterTable<K, V>::find(const K& key) const {
 	unsigned i = this->hash(key);
-	while (i != 0) {
+	while (i != -1) {
 		i = table[i].next; // search
 	}
 	return table[i].value;
@@ -49,27 +49,25 @@ void ChainedScatterTable<K, V>::insert(const K& key, const V& value) {
 	}
 	else {
 		unsigned i = this->hash(key);
-		if (table[i].status != ScatterObjectStatus::unoccupied) {
-			while (table[i].next != 0) {
-				i = table[i].next;
-			}
-			unsigned t = i;
-			t = this->g(t);
-			while (table[t].status != ScatterObjectStatus::unoccupied && i != t) {
-				t = this->g(t);
-			}
-			if (i == t) {
-				throw "Secondary hash transformation error.";
-			}
-			else {
-				table[t].next = i;
-			}
+		if (table[i].key == key) {
+			table[i].value = value;
+			table[i].status = ScatterObjectStatus::occupied;
+			this->count++;
 		}
-		table[i].key = key;
-		table[i].value = value;
-		table[i].status = ScatterObjectStatus::occupied;
-		table[i].next = 0;
-		this->count++;
+		else {
+			unsigned prev = i;
+			while (table[i].status != ScatterObjectStatus::unoccupied && table[i].key != key) {
+				prev = i;
+				i = this->g(i);
+			}
+			if (prev != i) 
+				table[prev].next = i;
+			table[i].key = key;
+			table[i].value = value;
+			table[i].status = ScatterObjectStatus::occupied;
+			table[i].next = -1;
+			this->count++;
+		}
 	}
 }
 
@@ -77,40 +75,40 @@ template<typename K, typename V>
 V ChainedScatterTable<K, V>::withdraw(const K& key) {
 	if (this->count == 0) {
 		std::cout << "Table is empty, can't withdraw." << std::endl;
+		return V();
 	}
 	else {
 		unsigned i = this->hash(key);
-		unsigned prev = 0;
-		while (i != 0 && table[i].key != key) {
+		unsigned prev = -1;
+		while (i != -1 && table[i].key != key) {
 			prev = i;
 			i = table[i].next;
 		}
-		if (i == 0) {
+		if (i == -1) {
 			std::cout << "Element with key " << key << " not found, can't withdraw." << std::endl;
 		}
 		else {
-			if (prev != 0) {
+			if (prev != -1) {
 				table[prev].next = table[i].next;
 				table[i].status = ScatterObjectStatus::deleted; // collision gets deleted
 				this->count--;
 				return table[i].value;
 			}
-			else if (table[i].next == 0) {
+			else if (table[i].next == -1) {
 					table[i].status = ScatterObjectStatus::deleted;
 					this->count--;
 					return table[i].value;
-				}
+			}
 			else {
 				unsigned next = table[i].next;
 				table[i] = table[next];
 				table[i].next = table[next].next;
-				V to_delete = table[next].value;
-				table[next] = ChainedScatterObject<K, V>();
 				table[next].status = ScatterObjectStatus::deleted;
 				this->count--;
-				return to_delete;
+				return table[next].value;
 			}
 		}
+		return V();
 	}
 }
 

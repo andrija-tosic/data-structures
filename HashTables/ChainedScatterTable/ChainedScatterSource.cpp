@@ -3,10 +3,10 @@
 #include "ChainedScatterTable.h"
 
 int main() {
-	ChainedScatterTable<int, std::string> table(10);
-	ChainedScatterTable<int, double> table2(10);
+	ChainedScatterTable<int, std::string> table(3);
+	ChainedScatterTable<int, double> table2(3);
 
-	table2.insert(2, 2.4);
+	// table2.insert(2, 2.4);
 
 	/*
 	char* a = new char[10];
@@ -32,9 +32,23 @@ int main() {
 
 	table.withdraw(50);
 	table.withdraw(24);
-	table.withdraw(34);
+	table.withdraw(36);
 
 	table.insert(24, "Nemanija");
+
+	table2.withdraw(3);
+
+
+	std::cout << "table1: " << std::endl;
+	table.print();
+	std::cout << "table2: " << std::endl;
+	table2.print();
+
+	table.insert(36, "Janko");
+
+	table2.insert(3, 5.0);
+	table2.insert(3, 14.431);
+	table2.insert(2, 0.212);
 
 	std::cout << "table1: " << std::endl;
 	table.print();

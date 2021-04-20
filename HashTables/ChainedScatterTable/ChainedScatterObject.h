@@ -11,13 +11,13 @@ private:
 
 public:
 	ChainedScatterObject() : ScatterObject<K, V>() {
-		next = 0;
+		next = -1;
 	}
 	ChainedScatterObject(const K& key) : ScatterObject<K, V>(key) {
-		next = 0;
+		next = -1;
 	}
 	ChainedScatterObject(const K& key, const V& value) : ScatterObject<K, V>(key, value) {
-		next = 0;
+		next = -1;
 	}
 	ChainedScatterObject(const K& key, const V& value, const unsigned int& n) : ScatterObject<K, V>(key, value) {
 		next = n;
