@@ -41,19 +41,19 @@ template<typename K, typename V>
 unsigned int OpenScatterTable<K, V>::findUnoccupied(const K& key) const {
 	if (this->count != this->length) {
 		unsigned h = this->hash(key);
-		unsigned t = h;
-		if (table[t].status == ScatterObjectStatus::unoccupied) {
-			return t;
+		unsigned probe = h;
+		if (table[probe].status == ScatterObjectStatus::unoccupied) {
+			return probe;
 		}
 		else { // do secondary search
 			unsigned i = 0;
 			do {
-				t = (this->hash(key) + c(i)) % this->length;
-				if (table[t].status != ScatterObjectStatus::occupied) {
-					return t;
+				probe = (this->hash(key) + c(i)) % this->length;
+				if (table[probe].status != ScatterObjectStatus::occupied) {
+					return probe;
 				}
 				i++;
-			} while (t != h && i < this->length);
+			} while (probe != h && i < this->length);
 		}
 	}
 	else {
@@ -64,15 +64,15 @@ unsigned int OpenScatterTable<K, V>::findUnoccupied(const K& key) const {
 
 template<typename K, typename V>
 V OpenScatterTable<K, V>::find(const K& key) const {
-	long int t;
+	long int probe;
 	for (unsigned i = 0; i < this->length; i++) {
-		t = (this->hash(key) + c(i)) % this->length;
-		if (table[t].status == ScatterObjectStatus::unoccupied) {
+		probe = (this->hash(key) + c(i)) % this->length;
+		if (table[probe].status == ScatterObjectStatus::unoccupied) {
 			std::cout << "Element with key " << key << " not found." << std::endl;
 			return V();
 		}
-		else if (table[t].key == key) {
-			return table[t].value;
+		else if (table[probe].key == key) {
+			return table[probe].value;
 		}
 	}
 	std::cout << "Element with key " << key << " not found." << std::endl;
@@ -81,14 +81,14 @@ V OpenScatterTable<K, V>::find(const K& key) const {
 
 template<typename K, typename V>
 unsigned int OpenScatterTable<K, V>::find_index(const K& key) const {
-	long int t;
+	long int probe;
 	for (unsigned i = 0; i < this->length; i++) {
-		t = (this->hash(key) + c(i)) % this->length;
-		if (table[t].status == ScatterObjectStatus::unoccupied) {
+		probe = (this->hash(key) + c(i)) % this->length;
+		if (table[probe].status == ScatterObjectStatus::unoccupied) {
 			return -1;
 		}
-		else if (table[t].key == key) {
-			return t;
+		else if (table[probe].key == key) {
+			return probe;
 		}
 	}
 	return -1;
