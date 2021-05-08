@@ -74,17 +74,18 @@ void LList::fillInTheBlanks()
 			prv->next = nxt->next;
 			delete nxt;
 			nxt = prv->next;
-			continue;
 		}
-
-		while (nxt->info - prv->info > 1)
+		else
 		{
-			prv->next = new LListNode(prv->info + 1, nxt);
-			prv = prv->next;
-		}
+			while (nxt->info - prv->info > 1)
+			{
+				prv->next = new LListNode(prv->info + 1, nxt);
+				prv = prv->next;
+			}
 
-		prv = nxt;
-		nxt = nxt->next;
+			prv = nxt;
+			nxt = nxt->next;
+		}
 	}
 }
 
