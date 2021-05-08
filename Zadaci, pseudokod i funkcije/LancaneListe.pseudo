@@ -80,3 +80,265 @@ DLLReverseSearch(END, E, PREV, LOC)
         PREV <- NULL // ako je lista prazna
 
 // O(n)
+
+
+//evo ti sve
+
+// LANCANE LISTE
+
+traversal(start)
+    pok <- start
+    while(pok != NULL)
+        obrada(info(pok))
+        pok <- link(pok)
+    end
+end
+
+searchNonSorted(start, E, LOC)
+    pok <- start
+    while(pok != NULL and info(pok) != E)
+        pok <- link(pok)
+    end
+    LOC <- pok
+    return LOC
+end
+
+searchSorted(start, E, LOC)
+    pok <- start
+    while(pok != NULL)
+        if (info(pok) == E)
+            LOC <- pok
+            exit
+        else if (info(pok) < E)
+            LOC <- NULL
+            exit
+        else 
+            pok <- link(pok)
+        end if
+    end
+    LOC <- NULL
+    return
+end
+
+insertAtStart(start, E)
+    novi <- getNode()
+    info(novi) <- E
+    link(novi) <- start
+    start <- novi
+    return
+end
+
+insertAfterLoc(start, LOC, E)
+    novi <- getNode()
+    info(novi) <- E
+    if(LOC == NULL)
+        link(novi) <- start
+        start <- novi
+    else
+        link(novi) <- link(LOC)
+        link(LOC) <- novi
+    end if
+end
+
+insertSorted(start, E) // opadajuci niz
+    novi <- getNode()
+    info(novi) <- E
+    if (start == NULL or E > info(start))
+        link(novi) <- start
+        start <- novi
+    else
+        pret <- start
+        pok <- link(pret)
+
+        while (pok != NULL and E < info(pok) )
+            pret <- pok
+            pok <- link(pok)
+        end
+
+        link(prev) <- novi
+        link(novi) <- pok
+    end if
+end
+
+deleteFromStart(start, E)
+    pok <- start
+    start <- link(start)
+    E <- info(pok)
+    freenode(pok)
+    return
+end
+
+deleteFromLOC(start, LOC, LOCP)
+    if (LOCP == NULL)
+        start <- link(start)
+    else
+        link(LOCP) <- link(LOC)
+    end if
+    freenode(LOC)
+    return
+end
+
+deleteE(start, E, status)
+    call findB(start, E, LOC, LOCP)
+
+    if (LOC == NULL)
+        status <- 1
+        return
+    end if
+
+    call deleteFromLOC(start, LOC, LOCP)
+    status <- 0
+    return
+end
+
+findB(start, E, LOC, LOCP)
+    if (start == NULL)
+        LOC <- NULL
+        LOCP <- NULL
+        return
+    else if (info(start) == E)
+        LOC <- start
+        LOCP <- NULL
+        return
+    else
+        spok <- start
+        npok <- link(start)
+
+        while (npok != NULL)
+            if (info(B) == E)
+                LOC <- npok
+                LOCP <- spok
+                return
+            end if
+            spok <- npok
+            npok <- link(npok)
+        end
+
+        LOC <- NULL
+        LOCP <- NULL
+        return
+    end if
+end
+
+/*
+jan 2020
+Napisati pseudokod operacije koja na osnovu zadatog polja A od N elemenata formira 
+dve lancane liste LL1 i LL2. Elementi polja A veci od srednje vrednosti elemenata polja A, 
+smestaju se u LL1 a elementi polja A manji ili jednaki od srednje vrednosti u LL2. 
+*/
+
+insertIntoLL(start, E)
+    novi <- getNode()
+    info(novi) <- E
+    link(novi) <- NULL
+
+    pok <- start
+
+    if (pok == NULL)
+        start <- novi
+        return
+    else
+        while (link(pok) != NULL)
+            pok <- link(pok)
+        end
+        
+        link(pok) <- novi
+        return
+    end if
+end
+
+funkc(A, N, start1, start2)
+    s <- 0
+    for i <- 1, N
+        s <- s + A[i]
+    end
+    s <- s / N
+
+    for i <- 1, N
+        if (A[i] > s) then
+            insertIntoLL(start1, A[i])
+        else
+            insertIntoLL(start2, A[i])
+        end if
+    end
+end
+
+/*
+1. kol 2017.
+Napisati pseudokod operacije brisanja poslednjeg elementa jednostruko spregnute lančane liste LL.
+*/
+
+deleteFromEnd(start, E)
+    if (start == NULL)
+        return
+    else if (link(start) == NULL)
+        E <- info(start)
+        freenode(start)
+        start <- NULL
+    else
+        spok <- start
+        npok <- link(start)
+        while (link(npok) != NULL)
+            spok <- npok
+            npok <- link(npok)
+        end
+
+        E <- info(npok)
+        freenode(npok)
+        link(spok) <- NULL
+    end if
+end
+
+/*
+2018. 1. kol
+Napisati pseudokod operacije brisanja elementa čija je vrednost E iz jednostruko
+spregnute lančane liste LL. Pseudokod mora da sadrži sve granične slučajeve!
+*/
+
+deleteE(start, E)
+    if (start == NULL)
+        return
+    else if (info(start) == E)
+        freenode(start)
+        start <- NULL
+    else 
+        spok <- start
+        npok <- link(spok)
+
+        while (npok != NULL and info(npok) != E)
+            spok <- npok
+            npok <- link(npok)
+        end
+
+        if (npok == NULL)
+            return
+        else
+            link(spok) <- link(npok)
+            freenode(npok)
+        end if
+    end if
+end
+
+/*
+2019. kol T
+Napisati pseudokod operacije dodavanja novog elementa E u jednostruko 
+spregnutu lančanu listu L. Obraditi sve granične slučajeve!
+*/
+
+insertE(start, E)
+    novi <- getNode()
+    info(novi) <- E
+    link(novi) <- NULL
+
+    if (start == NULL)
+        start <- novi
+    else
+        pok <- start
+        while(link(pok) != NULL)
+            pok <- link(pok)
+        end
+
+        link(pok) <- novi
+        return
+    end if
+end
