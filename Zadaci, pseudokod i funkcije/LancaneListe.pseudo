@@ -1,0 +1,82 @@
+// Napisati pseudokod operacije brisanja elementa čija je lokacija LOC
+// iz jednostruko spregnute lančane liste LL.
+
+Delete(START, PREV, LOC)
+    if (START = LOC) // ili PREV = NULL
+        START <- link(LOC) // ili <- link(START)
+    else
+        link(PREV) <- link(LOC)
+    free(LOC)
+    return
+
+// O(1) !!
+
+// Napisati pseudokod operacije dodavanja novog elementa E u sortiranu jednostruko spregnutu lančanu listu.
+// Predvideti sve moguće granične slučajeve
+// (dodavanje na početak, na kraj, u sredinu, lista je prazna).
+// 1, 2, 3, 5, 6
+// E = 4
+
+// 1, 2, 3
+// E = 4
+
+// 1, 2, 3
+// E = 0
+
+InsertSorted(START, E)
+    node <- getNode(E)
+
+    if (START = NULL) then // ako je lista prazna
+        START <- node
+    else
+        POK <- START
+
+        if (E < info(START)) then // ako je E manji od svih iz liste (umetanje na pocetak)
+            link(node) <- START
+            START <- node
+            return
+        
+        while (link(POK) != NULL and info(link(POK)) < E) // pokriva i umetanje na kraj
+            POK <- link(POK)
+        end
+
+        TEMP <- link(POK)
+        link(POK) <- node
+        link(node) <- TEMP
+    
+    return
+
+// O(n)
+
+// Napisati pseudokod operacije dodavanja novog elementa E na početak dvostruko spregnute lančane liste DLL.
+
+InsertBeginning(START, E)
+    node <- getNode(E)
+    llink(START) <- node
+    dlink(node) <- START
+    llink(node) <- NULL
+    START <- node
+    return
+// O(1) 
+
+// Prikazati memorijsku reprezentaciju dvostruko spregnute lančane liste.
+// Napisati pseudokod operacije traženja elementa iz dvostruko spregnute lančane liste DLL počev od repa liste.
+// Podrazumevati da je zadat info deo elementa koji se traži.
+
+DLLReverseSearch(END, E, PREV, LOC)
+    if (END != NULL) // da lista nije prazna
+        POK <- END
+        while (info(POK) != E and llink(POK) != START)
+            POK <- llink(POK)
+        end
+        if (info(POK) = E)
+            LOC <- POK
+            PREV <- llink(POK)
+        else
+            LOC <- NULL
+            PREV <- NULL // nije pronadjen element
+    else
+        LOC <- NULL
+        PREV <- NULL // ako je lista prazna
+
+// O(n)

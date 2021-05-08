@@ -93,9 +93,10 @@ unsigned int OpenScatterTable<K, V>::find_index(const K& key) const {
 	}
 	return -1;
 }
+
 template<typename K, typename V>
 unsigned int OpenScatterTable<K, V>::c(const unsigned int& i) const {
-	return i * i; // linear probing
+	return i * i; // quadratic probing
 }
 
 template<typename K, typename V>
@@ -104,9 +105,9 @@ void OpenScatterTable<K, V>::insert(const K& key, const V& value) {
 		std::cout << "Table is full, can't insert." << std::endl;
 	}
 	else {
-		unsigned to_insert = this->findUnoccupied(key);
-		table[to_insert] = ScatterObject<K, V>(key, value);
-		table[to_insert].status = ScatterObjectStatus::occupied;
+		unsigned i = this->findUnoccupied(key);
+		table[i] = ScatterObject<K, V>(key, value);
+		table[i].status = ScatterObjectStatus::occupied;
 		this->count++;
 	}
 }

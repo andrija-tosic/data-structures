@@ -1,0 +1,78 @@
+// Jun 2020
+UMETANJE(T, P, Q)
+    s1 <- Substring(T, 1, Index(P) - 1) // pre P
+    s2 <- Substring(T, Index(P) + Length(P), Length(T) - Index(P) - Length(P)) // posle P
+    s1 <- Concat(s1, Q)
+    s <- Concat(s1, s2)
+    return s
+end
+
+// Zadat je tekst T i uzorak P.
+// Napisati pseudokod operacije za brisanje svih pojava uzorka P u tekstu T.
+
+FindAndDeleteAll(T, P)
+    i <- PatternMatch(T, P)
+    S <- Substring(T, 0, Length(T))
+
+    while (i != null)
+        S1 <- Substring(S, 0, i)
+        S2 <- Substring(S, i + Length(P), Length(S) - (i + length(P)) + 1)
+
+        i <- PatternMatch(S, P)
+    end
+    return S
+
+// O(n^2) ili O(n)
+
+// Zadat je tekst T i uzorak P i uzorak Q.
+// Napisati pseudokod operacije koja umeće uzorak Q u tekst T ispred uzorka P ako uzorak P postoji u tekstu.
+
+InsertBefore(T, P, Q)
+    i <- PatternMatch(T, P)
+    if (i != null)
+        S1 <- Substring(T, 0, i)
+        S2 <- Substring(T, i, Length(T) - i + 1)
+        S <- Concatenate(Concatenate(S1, Q), S2)
+        return S
+    else
+        return T
+
+// O(n^2) ili O(n)
+
+// Za osnovne operacije za rad sa nizovima napišite naziv i kratak opis šta radi.
+
+Substring(S, I, N) // izdvaja podniz pocev od indeksa i, koji je dugacak N karaktera, O(n)
+Concatenate(S1, S2) // nadovezuje niz S1 nizom S2, O(n)
+PatterMatch(S, P) // nalazi indeks prve pojave uzorak P u nizu S, O(n^2) ili O(n)
+Length(S) // vraca duzinu niza, O(n) ili O(1)
+
+// Zadat je tekst T i uzorak P i uzorak Q.
+// Napisati pseudokod operacije kojim se vrši zamena svih pojava uzorka P uzorkom Q u tekstu T.
+
+ReplaceAll(T, P, Q)
+    i <- PatternMatch(T, P)
+    S <- Substring(T, 0, Length(T))
+
+    while (i != null)
+        S1 <- Substring(S, 0, i) // T before P
+        S2 <- Substring(S, i + Length(P), Length(S) - (i + length(P)) + 1) // T after P
+        S <- Concatenate(Concatenate(S1, Q), S2) // S1 + Q + S2
+        i <- PatternMatch(S, P)
+    end
+    return S
+
+// O(n^2) ili O(n)
+
+// Zadat je tekst T i uzorak P.
+// Napisati pseudokod operacije brisanja prve pojave zadatog uzorka P u tekstu T.
+
+FindAndDelete(T, P)
+    i <- PatternMatch(T, P) // O(n^2) ili O(n)
+    if (i != null)
+        S1 <- Substring(T, 0, i) // O(n)
+        S2 <- Substring(T, i + Length(P), Length(T) - (i + length(P)) + 1) // O(n)
+        S <- Concatenate(S1, S2) // O(n)
+        return S
+    else
+        return T
+// O(n^2) sa naive string search, O(n) sa preprocessing pattern matching
