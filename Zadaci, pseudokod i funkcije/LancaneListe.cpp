@@ -54,3 +54,75 @@ void InsertOrUpdate(int key, int value) {
     }
 }
 
+/* 2017 1. kol
+Napisati funkciju void LList::fillInTheBlanks() koja iz dinamički implementirane
+lančane liste, čiji su info delovi celi brojevi, uređene u neopadajući redosled, briše sve duple
+čvorove a dodaje čvorove za sve one vrednosti koje nedostaju između vrednosti dva uzastopna
+čvora liste. Na primer, ukoliko su info delovi dva uzastopna čvora vrednosti 1 i 4, između njih je
+potrebno dodati i čvorove sa vrednostima 2 i 3. 
+*/
+void LList::fillInTheBlanks()
+{
+	if (head == NULL)
+		return;
+
+	LListNode* prv = head, * nxt = head->next;
+	while (nxt != NULL)
+	{
+		if (prv->info == nxt->info)
+		{
+			prv->next = nxt->next;
+			delete nxt;
+			nxt = prv->next;
+			continue;
+		}
+
+		while (nxt->info - prv->info > 1)
+		{
+			prv->next = new LListNode(prv->info + 1, nxt);
+			prv = prv->next;
+		}
+
+		prv = nxt;
+		nxt = nxt->next;
+	}
+}
+
+// jun 2 2020
+void LList::Exchange(LList& list, int value, int length) 
+{
+	if (this->head == NULL || list.head == NULL)
+		throw "Empty list.";
+
+	LListNode* pPok = this->head->next;
+	LListNode* pPretPok = this->head;
+	LListNode* dPok = list.head->next;
+	LListNode* dPretPok = list.head;
+
+	while (pPok != NULL && pPok->info != value)
+	{
+		pPretPok = pPok;
+		pPok = pPok->next;
+		dPretPok = dPok;
+		dPok = dPok->next;
+	}
+
+	if (pPok == NULL)
+		throw "Element not found";
+
+	pPretPok->next = dPok;
+	dPretPok->next = pPok;
+
+	for (int i = 0; i < length; i++)
+	{
+		if (pPok == NULL || dPok == NULL)
+			throw "Length out of bounds.";
+		pPretPok = pPok;
+		pPok = pPok->next;
+		dPretPok = dPok;
+		dPok = dPok->next;
+	}
+
+	pPretPok->next = dPok;
+	dPretPok->next = pPok;
+}
