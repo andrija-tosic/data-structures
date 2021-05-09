@@ -195,3 +195,76 @@ void LList::UpdateNode(int key, int value) {
         }
     }
 }
+
+// dva resenja da se vidi raskos
+
+void LList::UpdateNode(int key, int value)
+{
+	if (head == NULL)
+		throw "prazno be";
+
+	LListNode* crt = head->next, * prv = head;
+
+	if (head->next == NULL || head->key == key)
+	{
+		if (head->key == key)
+		{
+			if (value == 0)
+			{
+				head = crt;
+				delete prv;
+			}
+			else
+			{
+				head->info += value;
+			}
+			return;
+		}
+	}
+	else if (head->next->info == key) // crt
+	{
+		if (value == 0)
+		{
+			head->next = head->next->next;
+			delete crt;
+		}
+		else
+		{
+			head->next->info += value;
+			head->next = head->next->next;
+			crt->next = head;
+			head = crt;
+		}
+		return;
+	}
+
+	else
+	{
+		LListNode* nxt = head->next->next;
+
+		while (nxt != NULL)
+		{
+			if (nxt->key == key)
+			{
+				if (value == 0)
+				{
+					crt->next = nxt->next;
+					delete nxt;
+				}
+				else
+				{
+					nxt->info =+ value;
+					crt->next = nxt->next;
+					nxt->next = crt;
+					prv->next = nxt;
+				}
+				return;
+			}
+
+			prv = crt;
+			crt = nxt;
+			nxt = nxt->next;
+		}
+	}
+	head = new LListNode(key, value, head);
+}
