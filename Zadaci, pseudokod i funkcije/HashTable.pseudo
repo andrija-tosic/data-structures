@@ -1,0 +1,20 @@
+/*
+Oktobar 2020
+
+Napisati pseudokod operacije dodavanja elementa sa kljucem k
+ u hes tablicu T ako se koristi hes funkcija h(k)
+ i modifikovano linearno trazenje mesta za sinonime.
+*/
+
+Insert(T, N, k, o)
+    if (tabela je puna) then
+        prekoracenje, return    
+    i <- h(k)
+    j <- 1
+    while (table[i] je zauzeto and j <= N)
+        i <- (i + a*j) mod N // a != 1 konstanta za modifikovano linearno trazenje
+        j <- j+1
+    end
+    table[i] <- o
+    table[i] <- je zauzeto
+end
