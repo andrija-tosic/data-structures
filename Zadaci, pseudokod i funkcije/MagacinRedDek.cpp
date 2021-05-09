@@ -77,10 +77,14 @@ char* Infix2Postfix(char* expr) // j duzina jbg
 
 /*
 Oktobar 2020
-Napisati funkciju koja odredjuje vrednost izraza zadatog u postfiks notaciji (npr. "2 3 + 1 0 * 5 /").
+Napisati funkciju koja odredjuje vrednost izraza zadatog u postfiks notaciji (npr. "2 3 + 1 0 * 5 /"). <- fali operator
 Definisati pomocnu strukturu koja se koristi za odredjivanje izraza i napisati funkcije
 dodavanja i brisanja iz pomocne strukture. Izraz je dat kao niz karaktera tako da su svi brojevi
 i operatori razdvojeni tacno jednim blanko znakom.
+2019 Kol 1
+U datom projektu ZadatakMagacin koji sadrži staticku implementaciju magacina, implementirati
+funkciju int calculatePostfixExpression(char* infix) (<- valjda postfix) koja izracunava vrednost prosledjenog
+aritmetickog izraza datog u postfix notaciji.
 */
 
 int calc(char op, int op1, int op2) {
