@@ -94,15 +94,9 @@ int calc(char op, int op1, int op2) {
 
 calculatePostfix(char* expr) {
 	Stack opStack();
-	int buf;
 	for (int i=0; i<strlen(expr); i+=2) {
-		buf = 0;
 		if (expr[i] >= '0' && expr[i] <= '9') {
-			while (expr[i] >= '0' && expr[i] <= '9') {
-				buf *= 10;
-				buf += expr[i] - '0';
-			}
-			opStack.push(buf);
+			opStack.push(expr[i] - '0');
 		}
 		else if (expr[i] == '+' || expr[i] == '-' || expr[i] == '*' || expr[i] == '/') {
 			int op2 = opStack.pop();
