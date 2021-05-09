@@ -166,7 +166,7 @@ void LList::UpdateNode(int key, int value) {
         Node* node1 = head;
         Node* node2 = head->next;
         Node* node3 = head->next->next;
-        
+
         while (node3 != NULL && node3->info.key != key) {
             node1 = node1->next;
             node2 = node2->next;
@@ -179,7 +179,7 @@ void LList::UpdateNode(int key, int value) {
                 if (node3->next != NULL) { // ako node3 nije poslednji u listi
                     node2->next = node3->next;
                 }
-                delete nxt;
+                delete node3;
             }
             else { // ako value != 0
                 node3->value += value;
