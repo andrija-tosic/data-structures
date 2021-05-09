@@ -129,12 +129,9 @@ int calcExpr(char op, int l, int r)
 {
 	switch (op)
 	{
-	case '+':
-		return l + r;
-	case '*':
-		return l * r;
-	default:
-		throw "Invalid operation.";
+	case '+': return l + r;
+	case '*': return l * r;
+	default: throw "Invalid operation.";
 	}
 }
 
