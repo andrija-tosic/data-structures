@@ -1,3 +1,21 @@
+/*
+Zadat je niz A od N elemenata i magacin Q kapaciteta M elemenata (M>N).
+Napisati pseudokod operacije kojom se vrsi upis elemenata niza A u magacin Q.
+Element niza A se upisuje u magacin ako je manji od vrsnog elementa magacina
+ili je magacin prazan. Podrazumevati da su osnovne operacije za rad sa
+magacinom implementirane (obavezno navesti njihov naziv, parametre, i opis sta rade).
+Na primeru niza A = (2, 5, 3, 1, 7) prikazati, korak po korak, izgled magacina i
+vrednost ukazatelja na vrh magacina.
+*/
+PoljeMagacinApril2018(A, N, Q, M)
+    i <- 0
+    while (i < N)
+        if (Q.isEmpty() or A[i] < Q.getTop())
+            Q.push(A[i])
+        end
+    end
+end
+
 PoljeJun2017(A, N)
 	v <- (A[1] + A[N]) / 2
     i <- 1

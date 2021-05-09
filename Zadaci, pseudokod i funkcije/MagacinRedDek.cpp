@@ -272,3 +272,40 @@ void Redo() {
 		Revert(a);
 	}
 }
+
+/*
+Oktobar 2 2018
+U klasi Scheduler su implementirane i dostupne za koriscenje (nije ih potrebno implementirati)
+privatne metode bool IsTaskRunning() koja proverava da li se neki zadatak trenutno izvrsava,
+Task* StopCurrentTask() koja stopira izvrsavanje zadataka i vraca pointer na trenutno izvrsavani
+zadatak kao i void ResumeScheduler() koja omogucava nastavljanje izvrsavanja zadataka.
+Koristeci odgovarajucu strukturu podataka, implementirati javne metode void ScheduleTask(Task *t)
+koja rasporedjuje zadatak koji je potrebno izvrsiti, void CancelNextTask() koja omogucava
+odustajanje od izvrsenja sledeceg zadatka i void PerformPriorityTask(Task *t) koja stopira
+izvrsenje trenutnog zadatka i rasporedjuje izvrsenje prosledjenog prioritetnog zadatka
+ali tako da se nakon njegovog izvrsenja nastavlja izvrsenje zadatka cije je izvrsavanje prekinuto.
+*/
+
+// bool IsTaskRunning()
+// Task* StopCurrentTask()
+// void ResumeScheduler()
+
+Deque dek();
+
+void ScheduleTask(Task* t) {
+	dek.enqueueRear(t);
+}
+
+void CancelNextTask() {
+	dek.dequeueFront();
+}
+
+void PerformPriorityTask(Task* t) {
+	StopCurrentTask();
+	dek.enqueueFront(t);
+	ResumeScheduler();
+	while (IsTaskRunning()) {
+		// ...
+	}
+	CancelNextTask();
+}
