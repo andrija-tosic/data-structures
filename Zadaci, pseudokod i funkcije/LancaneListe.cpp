@@ -92,9 +92,6 @@ void LList::fillInTheBlanks()
 // jun 2 2020
 void LList::Exchange(LList& list, int value, int length) 
 {
-	if (this->head == NULL || list.head == NULL)
-		throw "Empty list.";
-
 	LListNode* pPok = this->head->next;
 	LListNode* pPretPok = this->head;
 	LListNode* dPok = list.head->next;
@@ -108,16 +105,11 @@ void LList::Exchange(LList& list, int value, int length)
 		dPok = dPok->next;
 	}
 
-	if (pPok == NULL)
-		throw "Element not found";
-
 	pPretPok->next = dPok;
 	dPretPok->next = pPok;
 
 	for (int i = 0; i < length; i++)
 	{
-		if (pPok == NULL || dPok == NULL)
-			throw "Length out of bounds.";
 		pPretPok = pPok;
 		pPok = pPok->next;
 		dPretPok = dPok;
@@ -126,4 +118,80 @@ void LList::Exchange(LList& list, int value, int length)
 
 	pPretPok->next = dPok;
 	dPretPok->next = pPok;
+}
+
+/*
+Septembar 2020
+
+Koriscenjem jednostruko spregnute dinamicke lancane liste
+bez pokazivaca na rep koja sadrzi cvorove sa jedinstvenim
+kljucem i vrednoscu je implementirana samoorganizujuca lista.
+Napisati funkciju koja vrednost value dodaje postojecoj
+vrednosti cvora ciji je kljuc key. Nakon svakog azuriranja
+vrednosti cvora za zadati kljuc, cvor koji taj kljuc sadrzi
+se pomera za jedno mesto prema glavi liste. Ukoliko je vrednost
+cvora postavljena na nulu, cvor se brise iz liste, a ukoliko cvor
+sa zadatim kljucem ne postoji, dodaje se na glavu liste. Voditi
+racuna o efikasnosti implementacije.
+*/
+
+void LList::UpdateNode(int key, int value) {
+    if (head == NULL) { // prazna lista
+        return;
+    }
+    
+    if (head->info.key == key) { // mozda head
+        if (value == 0) {
+            delete head;
+            head = NULL;
+        }
+        else {
+            head->value += value;
+    }
+    else if (head->next != NULL && head->next->info.key == key) { // mozda drugi
+        if (value == 0) {
+            delete head->next;
+            head->next = NULL;
+        }
+        else {
+            head->next->value += value;
+            head->next = head;
+            head = head->next;
+        }
+    }
+    else if (head->next->next == NULL) { // 2 elementa, nije ni head ni head->next
+        addToHead(new Node(key, value));
+    }
+    else { // 3 ili vise elemenata
+        Node* node1 = head;
+        Node* node2 = head->next;
+        Node* node3 = head->next->next;
+        
+        while (node3 != NULL && node3->info.key != key) {
+            node1 = node1->next;
+            node2 = node2->next;
+            node3 = node3->next;
+
+        }
+
+        if (node3 != NULL && node3->info.key == key) { // nadjen
+            if (value == 0) {
+                if (node3->next != NULL) { // ako node3 nije poslednji u listi
+                    node2->next = node3->next;
+                }
+                delete nxt;
+            }
+            else { // ako value != 0
+                node3->value += value;
+
+                node1->next = node3;
+                node2->next = node3->next;
+                node3->next = node2;
+                }
+            }
+        }
+        else { // nije nadjen
+            addToHead(new Node(key, value));
+        }
+    }
 }
