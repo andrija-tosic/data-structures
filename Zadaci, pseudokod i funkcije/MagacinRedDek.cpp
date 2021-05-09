@@ -70,12 +70,7 @@ char* Infix2Postfix(char* expr) // j duzina jbg
 		postf[j++] = s.pop();
 	}
 
-	for (int i = 0; i < strlen(expr); i++)
-		std::cout << expr[i];
-
-	std::cout << std::endl;
-	for (int i = 0; i < j; i++)
-		std::cout << postf[i];
+	postf[j] = '\0';
 
 	return postf;
 }
