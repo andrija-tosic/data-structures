@@ -114,6 +114,83 @@ calculatePostfix(char* expr) {
 }
 
 /*
+jan 2020
+Napisati funkciju double Calc(char* expr), koja izracunava vrednost
+aritmetickog izraza expr. Izraz je zadat u infiks notaciji. Svi operandi
+su jednocifreni, nema razmaka izmedu operanada i operatora, a dozvoljene
+operacije su samo + i *. Smatrati da vec postoje implementirane pomocne
+(osnovne) strukture, sa odgovarajucim funkcijama za manipulaciju podacima.
+Voditi racuna o prioritetu operacija i primenjenim zagradama. U izrazu se mogu
+javiti samo male zagrade. Primer validnog izraza koji treba izraounati: 
+(((3+5)*4+3*2+(4+2)*5)*3+8).
+*/
+
+int calcExpr(char op, int l, int r)
+{
+	switch (op)
+	{
+	case '+':
+		return l + r;
+	case '*':
+		return l * r;
+	default:
+		throw "Invalid operation.";
+	}
+}
+
+double Calc(char* expr)
+{
+	char c;
+	Stack val(strlen(expr));
+	Stack op(strlen(expr));
+
+	int r, l;
+
+	for (int i = 0; i < strlen(expr); i++)
+	{
+		c = expr[i];
+		if (c >= '0' && c <= '9')
+		{
+			val.push(c - '0');
+		}
+		else if (c == '(')
+		{
+			op.push(c);
+		}
+		else if (c == ')')
+		{
+			while (op.getTop() != '(')
+			{
+				r = val.pop();
+				l = val.pop();
+				val.push(calcExpr(op.pop(), l, r));
+			}
+			op.pop();
+		}
+		else
+		{
+			while (!op.isEmpty() && precedence(op.getTop()) >= precedence(c))
+			{
+				r = val.pop();
+				l = val.pop();
+				val.push(calcExpr(op.pop(), l, r));
+			}
+			op.push(c);
+		}
+	}
+
+	while (!op.isEmpty())
+	{
+		r = val.pop();
+		l = val.pop();
+		val.push(calcExpr(op.pop(), l, r));
+	}
+
+	return val.pop();
+}
+
+
+/*
 2017 kol 1
 Napisati funkciju bool isCorrect(char* inStr), koja utvrduje da li je aritmeticki izraz,
 zadat kao ulazni niz karaktera, ispravan sa stanovista zatvaranja zagrada. U izrazu se mogu pojaviti
