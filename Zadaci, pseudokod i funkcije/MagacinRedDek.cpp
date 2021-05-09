@@ -15,7 +15,7 @@ int precedence(char op)
 		return 0;
 }
 
-char* Infix2Postfix(char* expr) // umesto char c, char c[2] i onda concat umesto postf[j++] jer ovako je duzina j, a j ne vracas
+char* Infix2Postfix(char* expr) // j duzina jbg
 {
 	Stack s(strlen(expr));
 	char* postf = new char[strlen(expr) + 1];
