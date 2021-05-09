@@ -79,3 +79,48 @@ char* Infix2Postfix(char* expr) // j duzina jbg
 
 	return postf;
 }
+
+/*
+2017 kol 1
+Napisati funkciju bool isCorrect(char* inStr), koja utvrduje da li je aritmeticki izraz,
+zadat kao ulazni niz karaktera, ispravan sa stanovista zatvaranja zagrada. U izrazu se mogu pojaviti
+male, srednje i velike zagrade. Npr. izraz {(a+b)*[(c-d)]} je ispravan, dok izraz {[a+b]*(c-d}) nije.
+Smatrati da postoji implemetirana struktura sa svim odgovarajucim operacijama, koju je potrebno
+instancirati za odgovarajuci tip podataka.
+*/
+bool isCorrect(char* inStr)
+{
+	Stack s(strlen(inStr));
+
+	for (int i = 0; inStr[i] != '\0'; i++)
+	{
+		switch (inStr[i])
+		{
+		case '(':
+		case '{':
+		case '[':
+			s.push(inStr[i]);
+			break;
+		case ')':
+			if (!s.isEmpty() && s.getTop() == '(')
+				s.pop();
+			else
+				return false;
+			break;
+		case '}':
+			if (!s.isEmpty() && s.getTop() == '{')
+				s.pop();
+			else
+				return false;
+			break;
+		case ']':
+			if (!s.isEmpty() && s.getTop() == '[')
+				s.pop();
+			else
+				return false;
+			break;
+		}
+	}
+	
+	return s.isEmpty();
+}
