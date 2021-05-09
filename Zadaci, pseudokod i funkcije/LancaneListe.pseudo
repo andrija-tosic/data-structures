@@ -1,3 +1,35 @@
+/*
+Oktobar 2020
+
+Dat je niz A od N elemenata i jednostruko spregnuta lancana lista L.
+Niz A sadrzi pozitivne i negativne vrednosti, a lancana lista L
+sadrzi vrednosti sortirane u opadajuci redosled. Napisati pseudokod
+operacija koja cita redom elemente iz niza A i eventualno ih
+upisuje u sortiranu listu L: ako je element niza A pozitivan, upisuje
+ga u listu tako da ona i dalje bude sortirana, a ako je negativan,
+ne upisuje ga. Inicijalno, lancana lista L ne mora da bude prazna.
+*/
+
+InsertPositive(A, N, L)
+    i <- 0
+    while (i < N)
+        pok <- L
+        if (A[i] < 0) then
+            i <- i+1
+        else
+            while (pok != NULL and link(pok != NULL) and link(pok > A[i]))
+                pok <- link(pok)
+            end
+            if (pok = NULL) then // ako je prazna
+                L <- getNode(A[i])
+            else
+                node <- getNode(A[i])
+                link(node) <- link(pok)
+                link(pok) <- node
+                i <- i+1
+    end
+end
+
 // Napisati pseudokod operacije brisanja elementa čija je lokacija LOC
 // iz jednostruko spregnute lančane liste LL.
 
