@@ -225,3 +225,46 @@ bool isCorrect(char* inStr)
 	
 	return s.isEmpty();
 }
+
+/*
+2018 kol 1
+U klasi Application su implementirane i dostupne za koriscenje metode
+void Perform(Action *a) koja primenjuje prosledjenu akciju i void Revert(Action *a)
+koja stanje aplikacije vraca na stanje pre prosledjene akcije
+(ukoliko je to poslednje primenjena akcija). Na osnovu dostupnih privatnih metoda
+i koriscenjem odgovarajuce strukture, u klasi Application implementirati
+javne metode void Do(Action *a), void Undo() i void Redo() na programskom jeziku C++.
+Metoda Do izvrsava akciju. metoda Undo vraca aplikaciju u stanje pre poslednje
+primenjene akcije dok metoda Redo izvrsava ponovo akciju koja je vracena.
+Mogude je pozivati Undo, i Redo sukcesivno vise puta.
+Smatrati da je potrebna struktura vec implementirana kao i sve njene standardne metode.
+Napomena: Implementacije koje se zasnivaju na neoptimalnom i pogresnom koriscenju
+izabrane strukture ili koriste iskljucivo polja ce biti ocenjivane sa najvise 25% poena.
+*/
+
+Stack<Action*> stack1();
+Stack<Action*> stack2();
+
+void Do(Action* a) {
+	while (!stack2.isEmpty()) {
+		stack2.pop();
+	}
+	stack1.push(a);
+	Perform(a);
+}
+
+void Undo() {
+	if (!stack1.isEmpty()) {
+		Action* a = stack1.pop();
+		stack2.push(a);
+		Revert(a);
+	}
+}
+
+void Redo() {
+	if (!stack2.isEmpty()) {
+		Action* a = stack2.pop();
+		stack1.push(a);
+		Revert(a);
+	}
+}
