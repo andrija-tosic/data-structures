@@ -34,9 +34,9 @@ unsigned int metod_fibonnaci(unsigned int key) {
 
 unsigned int metod_presavijanja(unsigned int key) {
     unsigned sum = 0;
-    for(int i=1000; i<1000000000; i*=1000) {
-        sum += key % i;
-        key %= i;
+    for(int i=0; i<3; i++) {
+        sum += key % 1000; // extract zadnje 3 cifre
+        key /= 1000; // shave off zadnje 3 cifre
     }
     return sum;
 }
