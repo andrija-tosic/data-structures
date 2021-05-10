@@ -6,15 +6,20 @@ Napisati pseudokod operacije dodavanja elementa sa kljucem k
  i modifikovano linearno trazenje mesta za sinonime.
 */
 
-Insert(T, N, k, o)
-    if (tabela je puna) then
-        prekoracenje, return    
+insert(T, N, el, key, a)
+    if (isFull(T))
+        return
     i <- h(k)
-    j <- 1
-    while (table[i] je zauzeto and j <= N)
-        i <- (i + a*j) mod N // a != 1 konstanta za modifikovano linearno trazenje
-        j <- j+1
+    p <- 0
+    while (p < N)
+        if (T[i] == NULL || T[i] == DELETED)
+            T[i] = el
+            return
+        else
+            i <- (i + a) mod N
+            p <- p + 1
+        end if
     end
-    table[i] <- o
-    table[i] <- je zauzeto
+    return // nije nadjen
 end
+
