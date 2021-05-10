@@ -202,9 +202,6 @@ void LList::UpdateNode(int key, int value) {
             head = head->next;
         }
     }
-    else if (head->next->next == NULL) { // 2 elementa, nije ni head ni head->next
-        addToHead(new Node(key, value));
-    }
     else { // 3 ili vise elemenata
         Node* node1 = head;
         Node* node2 = head->next;
