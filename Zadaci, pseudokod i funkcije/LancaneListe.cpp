@@ -219,9 +219,7 @@ void LList::UpdateNode(int key, int value) {
 
         if (node3 != NULL && node3->info.key == key) { // nadjen
             if (value == 0) {
-                if (node3->next != NULL) { // ako node3 nije poslednji u listi
-                    node2->next = node3->next;
-                }
+                node2->next = node3->next;
                 delete node3;
             }
             else { // ako value != 0
