@@ -38,8 +38,58 @@ InsertPositive(A, N, L)
                 end
             end
         end
-        i <- i+1
     end
+end
+
+/*
+jun 2018
+Dat je niz A od N elemenata i jednostruko spregnuta lancana lista L. Niz A 
+sadrzi pozitivne i negativne vrednosti, a lancana lista L sadrzi vrednosti 
+sortirane u opadajuci redosled. Napisati pseudokod operacije koja cita redom 
+elemente niza A i eventualno ih upisuje u sortiranu listu L: ako je element 
+niza A pozitivan, upisuje ga u listu tako da ona i dalje bude sortirana, a ako 
+je negativan, brise prvi element liste L. Inicijalno, lancana lista L ne mora da bude prazna. 
+*/
+
+deleteFromStart(start)
+    if (start != NULL) 
+        pok <- start
+        start <- link(pok)
+        freenode(pok)
+    end if
+    return
+end
+
+insertSorted(start, E) // opadajuci
+    novi <- getNode()
+    info(novi) <- E
+    if (start == NULL or E > info(start))
+        link(novi) <- link(start)
+        start <- novi
+    else
+        pret <- start
+        pok <- link(pret)
+
+        while (pok != NULL and E < info(pok))
+            pret <- pok
+            pok <- link(pok)
+        end
+
+        if (E != NULL and E == info(pok))
+            return // vec postoji
+        else
+            link(prev) <- novi
+            link(novi) <- pok
+        end if
+    end if
+end
+
+fuknc(A, N, start)
+    for i = 1, N
+        if (A[i]) < 0
+            deleteFromStart(start)
+        else
+            insertSorted(start, A[i])
 end
 
 // Napisati pseudokod operacije brisanja elementa čija je lokacija LOC
