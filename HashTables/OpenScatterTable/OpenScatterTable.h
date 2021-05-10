@@ -46,7 +46,7 @@ unsigned int OpenScatterTable<K, V>::findUnoccupied(const K& key) const {
 			return probe;
 		}
 		else { // do secondary search
-			unsigned i = 0;
+			unsigned i = 1;
 			do {
 				probe = (this->hash(key) + c(i)) % this->length;
 				if (table[probe].status != ScatterObjectStatus::occupied) {

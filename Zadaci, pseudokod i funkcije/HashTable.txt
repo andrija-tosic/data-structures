@@ -31,11 +31,12 @@ Prikazati opšti postupak brisanja podatka sa ključem K iz Heš tablice.
 3. Inače, podatak nije pronađen, nema brisanja
 
 Da li je dovoljno element sa ključem K samo obrisati?
+Nije dovoljno, potrebno je obeleziti celiju kao DELETED da bi se znalo da mozda ima sinonima.
 
 Objasniti na koji način se tretira obrisana vrednost kod kasnijih operacija traženja, dodavanja i brisanja.
 Traženje tretira DELETED kao da ćelija sadrži element sa ključem koji se ne poklapa sa traženim.
 Dodavanje tretira DELETED kao da je ćelija prazna i da može da se upiše.
-Brisanje tretira DELETED kao da je ćelija nije zauzeta, i primenjuje traženje po sinonima.
+Brisanje tretira DELETED kao da je ćelija zauzeta, i primenjuje traženje po sinonima.
 
 Opisati postupak brisanja zadatog elementa iz Heš tablice HT,
 ako se za pristup podacima se koristi Heš funkcija h(k),

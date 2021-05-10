@@ -14,19 +14,22 @@ unsigned int djb2(unsigned char *str) {
 
 unsigned int metod_sredine_kvadrata(unsigned int key) {
     unsigned w = 32;
-    return (key*key) >> (w - 6);
+    unsigned p = 6; // m = 64
+    return (key*key) >> (w - p);
 }
 
 unsigned int metod_mnozenja(unsigned int key) {
     unsigned a = 2654435769; // 2^32 / fi
     unsigned w = 32;
-    return (a*key) >> (w - 6);
+    unsigned p = 6;
+    return (a*key) >> (w - p);
 }
 
 unsigned int metod_fibonnaci(unsigned int key) {
     unsigned a = 40503;
     unsigned w = 32;
-    return (a*key) >> (w - 6);
+    unsigned p = 6;
+    return (a*key) >> (w - p);
 }
 
 unsigned int metod_presavijanja(unsigned int key) {
