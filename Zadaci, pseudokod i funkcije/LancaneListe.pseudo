@@ -18,7 +18,7 @@ InsertPositive(A, N, L)
                 node <- getNode(A[i])
                 link(node) <- L
                 L <- node
-            else if (A[i] < L)
+            else if (A[i] < info(L))
                     node <- getNode(A[i])
                     link(node) <- link(L)
                     link(L) <- node
@@ -29,7 +29,7 @@ InsertPositive(A, N, L)
                 end
                 if (link(pok) = NULL) then // ako je stiglo do kraja
                     link(pok) <- getNode(A[i])
-                else if (info(link(pok)) != A[i]) // ako ga vec ima, ignorise se
+                else if (info(link(pok)) > A[i]) // ako ga vec ima, ignorise se
                     node <- getNode(A[i])
                     link(node) <- link(pok) // u sred liste
                     link(pok) <- node
