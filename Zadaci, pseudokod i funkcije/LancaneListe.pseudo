@@ -29,15 +29,14 @@ InsertPositive(A, N, L)
                 end
                 if (link(pok) = NULL) then // ako je stiglo do kraja
                     link(pok) <- getNode(A[i])
-                else if (info(link(pok)) = A[i]) // ako ga vec ima
-                    i <- i+1
-                else // u sred liste
+                else if (info(link(pok)) != A[i]) // ako ga vec ima, ignorise se
                     node <- getNode(A[i])
-                    link(node) <- link(pok)
+                    link(node) <- link(pok) // u sred liste
                     link(pok) <- node
                 end
             end
         end
+        i <- i+1
     end
 end
 
