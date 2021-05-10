@@ -14,7 +14,7 @@ InsertPositive(A, N, L)
     i <- 0
     while (i < N)
         if (A[i] > 0) then
-            if (L = NULL or A[i] > L) then // ako je prazna ili na pocetak
+            if (L = NULL or A[i] > info(L)) then // ako je prazna ili na pocetak
                 node <- getNode(A[i])
                 link(node) <- L
                 L <- node
@@ -85,7 +85,7 @@ end
 
 fuknc(A, N, start)
     for i = 1, N
-        if (A[i]) < 0
+        if (A[i] < 0)
             deleteFromStart(start)
         else
             insertSorted(start, A[i])
