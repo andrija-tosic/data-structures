@@ -15,22 +15,27 @@ InsertPositive(A, N, L)
     while (i < N)
         if (A[i] > 0) then
             if (L = NULL or A[i] > info(L)) then // ako je prazna ili na pocetak
-                node <- getNode(A[i])
+                node <- getNode()
+                info(node) <- A[i]
                 link(node) <- L
                 L <- node
             else if (A[i] < info(L))
-                    node <- getNode(A[i])
-                    link(node) <- link(L)
-                    link(L) <- node
+                node <- getNode()
+                info(node) <- A[i]
+                link(node) <- link(L)
+                link(L) <- node
             else
                 pok <- L
                 while (link(pok) != NULL and info(link(pok)) >= A[i])
-                pok <- link(pok)
+                    pok <- link(pok)
                 end
                 if (link(pok) = NULL) then // ako je stiglo do kraja
-                    link(pok) <- getNode(A[i])
-                else if (info(link(pok)) > A[i]) // ako ga vec ima, ignorise se
-                    node <- getNode(A[i])
+                    node <- getNode()
+                    info(node) <- A[i]
+                    link(pok) <- node
+                else if (info(link(pok)) > A[i]) // ako je =, ignorise se
+                    node <- getNode()
+                    info(node) <- A[i]
                     link(node) <- link(pok) // u sred liste
                     link(pok) <- node
                 end
