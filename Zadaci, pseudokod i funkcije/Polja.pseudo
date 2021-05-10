@@ -7,11 +7,11 @@ magacinom implementirane (obavezno navesti njihov naziv, parametre, i opis sta r
 Na primeru niza A = (2, 5, 3, 1, 7) prikazati, korak po korak, izgled magacina i
 vrednost ukazatelja na vrh magacina.
 */
-PoljeMagacinApril2018(A, N, Q, M)
+PoljeMagacinApril2018(A, N, Q, t)
     i <- 0
     while (i < N)
-        if (Q.isEmpty() or A[i] < Q.getTop())
-            Q.push(A[i])
+        if (isEmpty(Q, t) or A[i] < getTop(Q, t))
+            push(Q, t, A[i])
         end
     end
 end

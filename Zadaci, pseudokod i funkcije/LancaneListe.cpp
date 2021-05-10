@@ -1,3 +1,46 @@
+/*
+April 2019
+
+Napisati funkciju void UmetniListu(DLList uredjena, DLList nova)
+koja elemente neuredjene dvostruko ulancane liste nova umece u
+dvostruko ulancanu listu uredjena tako da ova lista ostane
+uredjena u rastucem redosledu. Prilikom dodavanja svakog sledeceg
+elementa iz liste nova trazenje mesta zapoceti od pozicije na
+kojoj se nalazi prethodno umetnuti element u listi uredjena.
+*/
+
+void UmetniListu(DLList uredjena, DLList nova) {
+    if (nova != NULL) {
+        DLLNode *ur = uredjena, *nov = nova;
+        if (uredjena == NULL || uredjena->info > nova->info) { // ako je prazna ili pre pocetka
+            DLLNode* node = new DLLNode(nova->info);
+            uredjena = ur;
+        }
+        while (nov != NULL) {
+            if (ur->info < nov->info) { // odmah nakon prvog
+                DLLNode* node = new DLLNode(nov->info);
+                node->next = ur->next;
+                ur->next = node;
+            }
+            else {
+                while (ur->next != NULL && ur->next->info < nov->info) {
+                    ur = ur->next;
+                }
+                if (ur->next == NULL) { // na kraj liste
+                    ur->next = new DLLNode(nov->info);
+                }
+                else { // u sred liste
+                    DLLNode* node = new DLLNode(nov->info);
+                    node->next = ur->next;
+                    ur->next = node;
+                }
+            }
+            ur = ur->next; // zapocinje trazenje od pozicije prethodno umetnutog
+            nov = nov->next;
+        }
+    }
+}
+
 // Jun 2020 valjda
 void InsertOrUpdate(int key, int value) {
     if (head == NULL) { // prazna lista

@@ -9,21 +9,33 @@ upisuje u sortiranu listu L: ako je element niza A pozitivan, upisuje
 ga u listu tako da ona i dalje bude sortirana, a ako je negativan,
 ne upisuje ga. Inicijalno, lancana lista L ne mora da bude prazna.
 */
-
+// 9 8 X 6 5
 InsertPositive(A, N, L)
     i <- 0
     while (i < N)
-        pok <- L
         if (A[i] > 0) then
-            while (pok != NULL and link(pok != NULL) and link(pok > A[i]))
-                pok <- link(pok)
-            end
-            if (pok = NULL) then // ako je prazna
-                L <- getNode(A[i])
-            else
+            if (L = NULL or A[i] > L) then // ako je prazna ili na pocetak
                 node <- getNode(A[i])
-                link(node) <- link(pok)
-                link(pok) <- node
+                link(node) <- L
+                L <- node
+            else if (A[i] < L)
+                    node <- getNode(A[i])
+                    link(node) <- link(L)
+                    link(L) <- node
+            else
+                pok <- L
+                while (link(pok) != NULL and info(link(pok)) >= A[i])
+                pok <- link(pok)
+                end
+                if (link(pok) = NULL) then // ako je stiglo do kraja
+                    link(pok) <- getNode(A[i])
+                else if (info(link(pok)) = A[i]) // ako ga vec ima
+                    i <- i+1
+                else // u sred liste
+                    node <- getNode(A[i])
+                    link(node) <- link(pok)
+                    link(pok) <- node
+                end
             end
         end
         i <- i+1
