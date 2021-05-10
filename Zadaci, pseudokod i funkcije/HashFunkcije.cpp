@@ -147,3 +147,40 @@ bool Register(char* email, char* name, char* lastName)
     } while (probe != hash && i < m)
     return false;
 }
+
+ChainedScatterObject ChainedScatterTable::withdraw(char* key)
+{
+	unsigned int hash = h(key);
+	unsigned int prev = -1;
+
+	if (count == 0)
+		throw "mrs";
+
+	while (array[hash].next != -1 && array[hash].next != 0 && array[hash].status != 0 && !array[hash].isEqualKey(key))
+	{
+		prev = hash;
+		hash = array[hash].next;
+	}
+
+	if (array[hash].next == 0)
+	{
+		throw "puno.";
+	}
+	else if (array[hash].status == 2 && array[hash].isEqualKey(key))
+	{
+		array[hash].status = 1;
+		array[hash].deleteRecord();
+		
+		if (prev != -1)
+		{
+			array[prev].next = array[hash].next;
+		}
+
+		array[hash].next = lrmp;
+		lrmp = hash;
+	}
+	else
+	{
+		throw "nema ga.";
+	}
+}
