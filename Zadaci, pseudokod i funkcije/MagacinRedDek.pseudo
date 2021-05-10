@@ -1,0 +1,89 @@
+// MAGACIN, RED, DEK
+
+/* 2019 kol T, 2017 1. kol, jun 2020, 
+Navesti šta je sve neophodno za implementaciju reda Q ako se za memorijsku reprezentaciju
+koristi polje. Napisati pseudokod operacija dodavanja i brisanja za ovakvu implementaciju
+reda Q. Vodite računa o načinu promene vrednosti ukazatelja i graničnim slučajevima.
+
+- Koristi se polje veličine N i tretira se kao cirkularno
+    - kada se kod upisa ili čitanja dođe do kraja polja, ako ima mesta/elemenata, nastavlja 
+      se dodavanje/čitanje od donje granice
+- Dve promenljive koje se odnose na početak i kraj reda (ukazatelj na početak i ukazatelj na kraj reda)
+    - f (front):indeks prvog elementa reda
+    - r (rear):indeks elementa koji je odmah iza poslednjeg elementa u redu
+- Lokacija na koju ukazuje r je prazna
+*/
+
+enqueue(Q, f, r, N, e)
+    if (f == (r + 1) mod N)
+        return
+    else
+        Q[r] <- e
+        r <- (r + 1) mod N
+    end if
+end
+
+dequeue(Q, f, r, N, o)
+    if (f == r)
+        return
+    else
+        o <- Q[f]
+        f <- (f + 1) mod N
+    end if
+end
+
+/* 2018, 1. kol, 
+Navesti šta je sve neophodno za implementaciju magacina S ako se za memorijsku
+reprezentaciju koristi lančana lista. Za predloženu implementaciju magacina S napisati pseudokod
+operacija dodavanja i brisanja elemenata.
+
+Dodavanje elemenata na početak liste funkcioniše kao i dodavanje elemenata u magacin.
+- Brisanje elemenata iz magacina odgovara brisanju prvog elementa lančane liste (elementa na koga
+  ukazuje start odnosno head/glava liste)
+- Magacin je prazan ako je lista prazna
+Prednosti:
+ - Nema ograničenja u broju elemenata odnosno kapacitetu/veličini magacina
+*/
+
+push(s, t, e)
+    novi <- getNode()
+    info(novi) <- e
+    link(novi) <- t
+    t <- novi
+end
+
+pop(s, t, e)
+    if (t == NULL)
+        return
+    else
+        novi <- t
+        t <- link(t)
+        e <- info(novi)
+        freeNode(novi)
+    end if
+end
+
+/*
+apr 18
+Zadat je niz A od N  elemenata i magacin Q kapaciteta M elemenata (M>N). 
+Napisati pseudokod operacije kojom se vrsi upis elemenata niza A u magacin Q. 
+Element niza A se upisuje u magacin ako je manji od vrsnog elementa magacina 
+ili je magacin prazan. Ako nije manji, najpre se vrsni element brise (ako postoji), 
+upisuje element niza A, a nakon toga ponovo upisuje prethodno obrisani element 
+magacina. Magacin Q je inicijalno prazan. Podrazumevati da su osnovne operacije 
+za rad sa magacinom implementirane (obavezno navesti njihov naziv, parametre i opis 
+sta rade). Na primeru niza A=(2,5,3,1,7) prikazati, korak po korak, izgled magacina 
+i vrednost ukazatelja na vrh magacina. 
+*/
+
+upis(A, N, Q, t)
+    for i <- 1, N
+        if (t == NULL or A[i] < t)
+            push(Q, t, A[i])
+        else
+            pret <- pop(Q, t)
+            push(Q, t, A[i])
+            push(Q, t, pret)
+        end if
+    end
+end
