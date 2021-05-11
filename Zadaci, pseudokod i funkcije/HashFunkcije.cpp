@@ -65,6 +65,17 @@ unsigned g(unsigned h) {
     return h % m;
 }
 
+/*
+Septembar 2020
+U jednom kolu grupne faze Lige sampiona se igra i do osam utakmica.
+Za potrebe pracenja statistike svakog igraca, a kako bi se stedelo pristupanje bazi podataka,
+softver koji je razvila UEFA koristi hes tablicu sa unutrasnjim ulancavanjem i zajednickim prostorom
+za sinonime zarad brzog pristupa statistici svakog igraca. Za svakog igrada se pamti ime, prezime.
+Broj na dresu (1-99), troslovna oznaku kluba za koji igra i troslovna oznaka kluba protiv koga igra
+na utakmici za koju se vodi statistika kao i sama instanca klase Statistika (nije potrebno implementirati).
+Implementirati funkciju koja obezbedjuje dobro rasipanje stavki u tablici i metodu za dodavanje i
+azuriranje statistike igraca u hes tablici ako se zna da timovi unapred registruju 25 igraca za polusezonu.
+*/
 
 int main()
 {
