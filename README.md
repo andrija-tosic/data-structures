@@ -31,3 +31,8 @@
         <li>(Rasuta) Heš tablica sa otvorenim adresiranjem sinonima</li>
     </ul>
 </ol>
+
+ <img src="complexity.png" width="1000" alt="Complexity chart">
+ <img src="operations.png" width="1000" alt="Operations complexity">
+ <img src="sorts.png" width="1000" alt="Sorts complexity">
+ 
