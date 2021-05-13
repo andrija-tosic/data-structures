@@ -76,3 +76,204 @@ FindAndDelete(T, P)
     else
         return T
 // O(n^2) sa naive string search, O(n) sa preprocessing pattern matching
+
+
+// NIZOVI
+
+/* Osnovne operacije za rad sa nizovima 
+- Izdvajanje podniza (Substring)
+    PS <- SUBSTRING(S,i,n)
+    Vraća podniz PS niza S dužine n koji počinje od i-te pozicije
+
+- Indeksiranje (Indexing) ili poklapanje uzoraka (Pattern Matching)
+    i <- INDEX(T,P)
+    Vraća poziciju gde počinje prva pojava uzorka P u zadatom tekstu T
+    Ako se P ne nalazi u T rezultat je 0
+
+- Konkatenacija (Concatenation)
+    S3 <- CONCAT(S1,S2)
+    Vraća niz S3 dobijen konkatenacijom nizova S1 i S2
+    Niz S3 sadrži sve znake niza S1 iza kojih slede znaci niza S2
+
+- Nalaženje dužine niza (Length)
+    n <- LENGTH(S)
+    Vraća dužinu niza S 
+
+Kompozitne operacije / obrada reči
+- Umetanje (Insert)
+    INSERT(T,k,S)
+    U tekst T se umeće niz S počev od pozicije k
+
+- Brisanje (Delete)
+    DELETE(T,k,n)
+    Iz teksta T se briše niz dužine n počev od pozicije k
+
+- Zamena (Replace)
+    REPLACE(T,P,Q)
+    Zamena prve pojave uzorka P u tekstu T uzorkom Q
+
+Algoritmi traženja po tekstu (Pattern Matching Algorithms)
+- Algoritam grube sile
+- Brzi algoritmi traženja po tekstu
+- Ostali algoritmi
+*/
+
+insert(T, k, S)
+    S1 <- SUBSTRING(T, 1, k - 1)
+    S2 <- SUBSTRING(T, k, LENGTH(T) - k + 1)
+    S3 <- CONCAT(S1, S)
+    T <- CONCAT(S3, S2)
+end
+
+delete(T, k, n)
+    S1 <- SUBSTRING(T, 1, k - 1)
+    S2 <- SUBSTRING(T, k + n, LENGTH(T) - k - n + 1)
+    T <- CONCAT(S1, S2)
+end
+
+deleteAll(T, P)
+    k <- index(T, P)
+    while (k != 0)
+        delete(T, k, LENGTH(P))
+        k <- index(T, P)
+    end
+end
+
+replace(T, P, Q)
+    k <- index(T, P)
+    delete(T, k, LENGTH(P))
+    insert(T, k Q)
+end
+
+replaceAll(T, P, Q)
+    k <- index(T, P)
+    while (k != 0)
+        replace(T, P, Q)
+        k <- index(T, P)
+    end
+end
+
+// 2. Zadat je tekst T i uzorak P i uzorak Q. Napisati pseudokod operacije koja umeće 
+// uzorak Q u tekst T ispred uzorka P ako uzorak P postoji u tekstu.
+
+insertBeforeP(T, P, Q)
+    k <- index(T, P)
+    if (k != 0)
+        S1 <- SUBSTRING(T, 1, k - 1)
+        S2 <- SUBSTRING(T, K, LENGTH(T) - k + 1)
+        S3 <- CONCAT(S1, Q)
+        T <- CONCAT(S3, S2)
+    end
+    return T
+end
+
+// 3. Zadat je tekst T i uzorak P. Napisati pseudokod operacije brisanja prve pojave 
+// zadatog uzorka P u tekstu T.
+
+deleteFirstOccurence(T, P)
+    k <- index(T, P)
+    if (k != 0)
+        S1 <- SUBSTRING(T, 1, k - 1)
+        S2 <- SUBSTRING(T, k + LENGTH(P), LENGTH(T) - k - LENGTH(P) + 1)
+        T <- CONCAT(S1, S2)
+    end if
+    return T
+end
+
+// 4. Zadat je tekst T i uzorak P. Napisati pseudokod operacije za brisanje svih 
+//pojava uzorka P u tekstu T.
+
+deleteEveryP(T, P)
+    k <- index(T, P)
+    while (k != 0)
+        S1 <- SUBSTRING(T, 1, k - 1)
+        S2 <- SUBSTRING(T, k + LENGTH(P), LENGTH(T) - k - LENGTH(P) + 1)
+        T <- CONCAT(S1, S2)
+        k <- index(T, P)
+    end
+    return T
+end
+
+// 5. Zadat je tekst T i uzorak P i uzorak Q. Napisati pseudokod operacije kojim se 
+// vrši zamena svih pojava uzorka P uzorkom Q u tekstu T.
+
+replaceEveryP(T, P, Q)
+    k <- index(T, P)
+    while (k != 0)
+        S1 <- SUBSTRING(T, 1, k - 1)
+        S2 <- SUBSTRING(T, k + LENGTH(P), LENGTH(T) - k - LENGTH(P) + 1)
+        S3 <- CONCAT(S1, Q)
+        T <- CONCAT(S3, S2)
+        k <- index(T, P)
+    end
+    return T
+end
+
+// 2019. 1. kol
+// Zadat je tekst T, uzorak P i uzorak Q. Napisati pseudokod operacije INSERT_PAT(T,P,Q) kojim
+// se vrsi umetanje uzorka P u tekstu T na poziciju iza uzorka Q.
+
+INSERT_PAT(T, P, Q)
+    k <- index(T, Q)
+    if (k != 0)
+        S1 <- SUBSTRING(T, 1, k + LENGTH(Q) - 1)
+        S2 <- SUBSTRING(T, k + LENGTH(Q), LENGTH(T) - k - LENGTH(Q) + 1)
+        S3 <- CONCAT(S1, P)
+        T <- CONCAT(S3, S2)
+    end if
+    return T
+end
+
+// 2018. 1. kol
+// Zadat je tekst T i uzorak P, uzorak Q i uzorak R. Napisati pseudokod operacije BRIS_ZAM(T,P,Q,R)
+// kojim se vrsi brisanje iz teksta T onih pojava uzorka P kojima prethodi uzorak Q ili 
+// zamena pojave uzorka P uzorkom R ako to nije slucaj.
+
+delete(T, k, N)
+    S1 <- SUBSTRING(T, 1, k - 1)
+    S2 <- SUBSTRING(T, k + N, LENGTH(T) - k - N + 1)
+    T <- SUBSTRING(S1, S2)
+    return T
+end
+
+replace(T, P, Q)
+    k <- index(T, P)
+    S1 <- SUBSTRING(T, 1, k - 1)
+    S2 <- SUBSTRING(T, k + LENGTH(P), LENGTH(T) - k - LENGTH(P) + 1)
+    S3 <- CONCAT(S1, Q)
+    T <- CONCAT(S3, S2)
+    return T
+end
+
+BRIS_ZAM(T, P, Q, R)
+    pk <- index(T, P)
+    while (pk != 0)
+        qk <- index(T, Q)
+        if (pk - LENGTH(Q) == qk) then // ispred je
+            T <- delete(T, pk, LENGTH(P))
+        else
+            T <- replace(T, P, R)
+        end
+        pk <- index(T, P)
+    end
+    return T
+end
+
+/*
+jun 2 2020
+Ako su dostupne osnovne operacije za obradu reci (izdvajanje podniza, indeksiranje, 
+konkatenacija i nalazenje duzina niza), napisati pseudokod operacije koja predstavlja 
+modifikaciju kompozitne operacije za umetanje u tekst T, tako sto se umesto na 
+poziciju k, novi niz S dodaje na poziciju iza zadatog uzorka P (ako P postoji u tekstu T).
+*/
+
+insertAfterP(T, S, P)
+    k <- index(T, P)
+    if (k != NULL)
+        S1 <- SUBSTRING(T, 1, k + LENGTH(P) - 1)
+        S2 <- SUBSTRING(T, k + LENGTH(P), LENGTH(T) - k + 1)
+        S3 <- CONCAT(S1, S)
+        T <- CONCAT(S3, S2)
+    end if
+    return T
+end

@@ -96,3 +96,102 @@ int main()
     std::cout << jun2020g(jun2020f("MCF-5347/36-105")) << std::endl;
     return 0;
 }
+
+/*
+2020 jan
+U cilju razvoja softvera za proveru zauzetosti email adresa ACME kompanije 
+koja koristi sledece domene na kojima registruje emailove zaposlenih 
+(acme.com, acme.org, acme.us.com i acme.io) koristi se hes tablica sa 
+otvorenim adresiranjem i sekundarnom funkcijom sa kvadratnim trazenjem. 
+Implementirati funkcije bool IsTaken(char* email, char* name, char* lastName) 
+koja vraca ime i prezime radnika kome je dodeljena email adresa, ukoliko postoji 
+iii vraca podatak o tome da email adresa nije zauzeta i funkciju 
+bool Register(char* email, char* name, char* lastName) koja registruje email za 
+radnika cije je ime i prezime prosledjeno. Smatrati da je softver projektovan za 
+registraciju do 1000 email adresa.
+*/
+
+bool IsTaken(char* email, char* name, char* lastName)
+{
+	unsigned int hash = h(email);
+
+    for (int i = 0; i < m; i++)
+    {
+        unsigned int probe = hash + c(i);
+        if (array[probe].status == 0) return false;
+        if (array[probe].status == 2 && strcmp (array[probe].getKey(), email) == 0)
+        {
+            name = array[probe].name;
+            lastName = array[probe].lastName;
+            return true;
+        }
+    }
+    
+    return false;
+}
+
+bool Register(char* email, char* name, char* lastName)
+{
+    if (count == m)
+        throw "Full";
+
+    if (isTaken(email, nullptr, nullptr))
+        throw "Posotji";
+
+    unsigned int hash = h(email);
+    unsigned int probe = hash;
+
+    int i = 0;
+
+    do
+    {
+        if (array[probe].status < 2)
+        {
+            array[probe].status = 2;
+            array[probe].name = name;
+            array[probe].lastName = lastName;
+            count++;
+            return true;
+        }
+        i++;
+        probe = (hash + c(i))
+    } while (probe != hash && i < m)
+    return false;
+}
+
+ChainedScatterObject ChainedScatterTable::withdraw(char* key)
+{
+	unsigned int hash = h(key);
+	unsigned int prev = -1;
+
+	if (count == 0)
+		throw "mrs";
+
+	while (array[hash].next != -1 && array[hash].next != 0 && array[hash].status != 0 && !array[hash].isEqualKey(key))
+	{
+		prev = hash;
+		hash = array[hash].next;
+	}
+
+	if (array[hash].next == 0)
+	{
+		throw "puno.";
+	}
+	else if (array[hash].status == 2 && array[hash].isEqualKey(key))
+	{
+		array[hash].status = 1;
+		array[hash].deleteRecord();
+		
+		if (prev != -1)
+		{
+			array[prev].next = array[hash].next;
+		}
+
+		array[hash].next = lrmp;
+		lrmp = hash;
+	}
+	else
+	{
+		throw "nema ga.";
+	}
+}

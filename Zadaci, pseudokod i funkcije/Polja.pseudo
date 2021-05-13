@@ -125,3 +125,212 @@ Search(A, N, E)
         ind <- ArraySearch(A + N/2 + 1, N - (N/2 + 1), E) // O(n)
         return ind
 // O(n) + O(logn) = O(n)
+
+
+// POLJA
+
+arrayTraversal(A, d, g)
+    k <- d
+    while (k <= d)
+        OBRADA(A[k])
+        k <- k + 1
+    end
+    return
+end
+
+arrayLinearSearch(A, n, E)
+    LOC <- 0
+    while (LOC < n)
+        if (A[LOC] == n) then return LOC
+        LOC <- LOC + 1
+    end
+    LOC <- NULL
+    return LOC
+end
+
+arrayBinarySearch(A, n, E)
+    d <- 0
+    g <- n - 1
+    s <- (d + g) / 2
+
+    while (d <= g and A[s] != E)
+        if (A[s] < E) then
+            g <- s + 1
+        else 
+            d <- s - 1
+        end
+        s <- (d + g) / 2
+    end
+    
+    if (A[s] = E) then
+        LOC <- s
+    else
+        LOC <- NULL
+    end
+
+    return LOC
+end
+
+arrayInsertAt(A, n, k, E)
+    j <- n
+    while (j >= k)
+        A[j + 1] <- A[j]
+        j <- j - 1
+    end
+
+    A[k] <- E
+    n <- n + 1
+    return
+end
+
+arrayDeleteAt(A, n, k, E)
+    E <- A[k]
+    j <- k
+    while (k < n) // krece od 1 i guess
+        A[k] <- A[k + 1]
+        k <- k + 1
+    end
+
+    n <- n - 1
+    return
+end
+
+// 2019. 1. kol
+// 3. Dato je polje A od N elementa (celih brojeva), u kome su u prvoj 
+// polovini polja (od 1 do N/2) elementi uređeni u rastući poredak, a u drugoj 
+// polovini (od (N/2)+1 do N) nisu uređeni, ali su vrednosti veće od vrednosti 
+// elemenata u prvoj polovini polja. Napisati pseudokod operacije za traženje 
+// elementa E u polju A.
+
+arrayBinarySearch(A, dd, gg, E)
+    d <- dd
+    g <- gg
+    s <- (d + g) / 2
+    while (d <= g and A[s] != E)
+        if (E < A[s]) then
+            g <- s - 1
+        else
+            d <- s + 1
+        end
+    end
+
+    if (A[s] = E) then
+        LOC <- s
+    else 
+        LOC <- NULL
+    end
+
+    return LOC
+end
+
+arrayLinearSearch(A, dd, gg, E)
+    j <- dd
+    while (j <= gg)
+        if (A[j] = E) then return j
+        j <- j + 1
+    end
+    j <- NULL
+    return j
+end
+
+arrayPolaPolaSearch(A, N, E)
+    s <- N / 2
+    if (E < A[s]) then
+        s <- arrayBinarySearch(A, 1, s - 1, E) // s-1 posto ispitujemo E < A[s]
+    else if (E > A[s]) then
+        s <- arrayLinearSearch(A, s + 1, N, E)
+    else if (E != A[s])
+        s <- NULL
+    end
+    return s
+end
+
+// 4. Napisati pseudokod operacije koja pronalazi vrednost najmanjeg elementa u 
+// polju A od N elemenata, a nakon toga od vrednosti svih elemenata polja se vrši 
+// oduzimanje pronađene vrednosti najmanjeg elementa.
+
+arrayOduzmiMin(A, N, E)
+    min <- A[1]
+    for i <- 2, N
+        if (A[i] < min) then
+            min <- A[i]
+    end
+    for i <- 1, N
+        A[i] <- A[i] - min
+    end
+end
+
+// 5. Dato je polje A od N elemenata i polje B od M elemenata (M<N). Napisati 
+// pseudokod operacije koja pronalazi redom pozicije elemenata iz polja B u polju A 
+// i na mesto tog elementa u polju B upisuje indeks pozicije iz A ili 0 ako ne postoji.
+
+arrayLinearSearch(A, N, B[i])
+    LOC <- 1
+    while(LOC <= N)
+        if(A[LOC] == E) then return LOC
+        LOC <- LOC + 1
+    end
+    LOC <- 0
+    return LOC
+end
+
+arrayUpisiIndexA(A, N, B, M)
+    for i <- 1, M
+        j <- arrayLinearSearch(A, N, B[i])
+        B[i] <- j
+    end
+end
+
+// 2018. 1. kol
+// Dato je uredjeno polje A od N celobrojnih elemenata. 
+// Napisati pseudokod operacije koja odredjuje indeks elementa cija je vrednost
+// jednaka srednjoj vrednosti elemenata polja (ako takav element postoji)
+
+funkc(A, N)
+    s <- 0
+    for i <- 1, N
+        s <- s + A[i]
+    end
+    s <- s / N
+
+    LOC <- arrayBinarySearch(A, N, s)
+    return LOC
+end
+
+/*
+jun 2020
+Dato je polje A od N elemenata cije su vrednosti brojevi, uredjeni u rastucem poretku. 
+Napisati pseudokod operacije koja za polje A trazi element u polju cija je vrednost jednaka 
+zbiru minimalne i maksimalne vrednosti iz polja A. Ako je vrednost nekog elementa jednaka 
+srednjoj vrednosti, operacija treba da vrati indeks tog elementa iii -1 ako ne postoji. 
+*/
+
+arrayBinarySearch(A, N, E)
+    d <- 0
+    g <- N - 1
+    s <- (d + g) / 2
+    
+    while (d <= g and A[s] != E)
+        if (A[s] < E)
+            d <- s + 1
+        else
+            g <- s - 1
+        end if
+        s <- (d + g) / 2
+    end
+
+    if (A[s] == E)
+        LOC <- s
+    else
+        LOC <- NULL
+    end if
+    return lOC
+end
+
+nadjiZbirMinMax(A, N)
+    min <- A[0]
+    max <- A[N - 1]
+
+    LOC <- arrayBinarySearch(A, N, min + max)
+    return LOC
+end
