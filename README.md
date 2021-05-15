@@ -21,14 +21,25 @@
             <li>Jednostruko ulančana</li>
         </ul>
     </ul>
-    <li>Stack</li>
-    <li>Red</li>
-    <li>Deque</li>
+    <li>Stack (Statička i dinamička implementacija)</li>
+    <li>Red (Statička i dinamička implementacija)</li>
+    <li>Dvostrani red (Deque) (Statička i dinamička implementacija)</li>
     <li>Heš tablice</li>
     <ul>
         <li>Heš tablica sa spoljašnjem ulančavanjem sinonima</li>
-        <li>(Rasuta) Heš tablica sa unutrašnjim ulančavanjem sinonima</li>
+        <li>(Rasuta) Heš tablica sa unutrašnjem ulančavanjem sinonima</li>
         <li>(Rasuta) Heš tablica sa otvorenim adresiranjem sinonima</li>
+    </ul>
+    <li>Stabla</li>
+    <ul>
+        <li>Binarno stablo pretrage (BST)</li>
+        <ul>
+           <li>Statička implementacija preko polja</li>
+        </ul>
+        <li>Gomila (Min-heap i max-heap)</li>
+        <ul>
+           <li>Statička implementacija preko polja</li>
+        </ul>
     </ul>
 </ol>
 
