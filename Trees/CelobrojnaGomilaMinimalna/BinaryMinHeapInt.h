@@ -16,4 +16,5 @@ public:
 
 	void insert(int el);
 	int deleteRoot();
+	static void heapSort(int* array, unsigned n);
 };

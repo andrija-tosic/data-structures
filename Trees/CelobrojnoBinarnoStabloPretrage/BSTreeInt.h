@@ -14,6 +14,15 @@ protected:
 	void preorder(const BSTNodeInt* ptr) const;
 	void postorder(const BSTNodeInt* ptr) const;
 
+
+	unsigned numberOfDistinctNodes(BSTNodeInt* node, BSTreeInt& tmp) const;
+	unsigned height(BSTNodeInt* node) const;
+	unsigned weight(BSTNodeInt* node) const;
+	BSTNodeInt* deleteLeaves(BSTNodeInt* node);
+	static void merge(BSTreeInt* merged, BSTNodeInt* node1, BSTNodeInt* node2);
+	void maxWidthLevel(BSTNodeInt* node, int level, int* levels);
+	int sumOfLeaves(BSTNodeInt* node);
+	bool isBalanced(BSTNodeInt* node);
 public:
 	BSTreeInt() { root = nullptr; numOfElements = 0; }
 	~BSTreeInt() { deleteTree(root); }
@@ -33,5 +42,14 @@ public:
 
 	void iterativePreorder() const;
 	void breadthFirstSearch() const;
-};
 
+
+	unsigned numberOfDistinctNodes() const;
+	unsigned height() const;
+	unsigned weight() const;
+	void deleteLeaves();
+	static BSTreeInt* merge(BSTreeInt* tree1, BSTreeInt* tree2);
+	int maxWidthLevel();
+	int sumOfLeaves();
+	bool isBalanced();
+};

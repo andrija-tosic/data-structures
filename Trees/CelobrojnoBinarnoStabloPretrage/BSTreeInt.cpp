@@ -181,10 +181,159 @@ void BSTreeInt::breadthFirstSearch() const
 		while (!queue.isEmpty()) {
 			ptr = queue.dequeue();
 			ptr->visit();
-			if (ptr->left != nullptr)
+			if (ptr->left != nullptr) {
 				queue.enqueue(ptr->left);
+			}
 			if (ptr->right != nullptr)
 				queue.enqueue(ptr->right);
 		}
+	}
+}
+
+unsigned BSTreeInt::numberOfDistinctNodes() const {
+	BSTreeInt distinct;
+	unsigned br = numberOfDistinctNodes(root, distinct);
+	return br;
+}
+
+unsigned BSTreeInt::numberOfDistinctNodes(BSTNodeInt* node, BSTreeInt& tmp) const {
+	if (node != nullptr) {		
+		if (!tmp.isInTree(node->getKey())) {
+			tmp.insert(node->getKey());
+		}
+		numberOfDistinctNodes(node->left, tmp);
+		numberOfDistinctNodes(node->right, tmp);
+	}
+	else {
+		return tmp.numOfElements;
+	}
+}
+
+unsigned BSTreeInt::height() const {
+	return height(root);
+}
+
+unsigned BSTreeInt::height(BSTNodeInt* node) const {
+	if (node == nullptr) {
+		return 0;
+	}
+
+	if (height(node->left) > height(node->right))
+		return 1 + height(node->left);
+	else
+		return 1 + height(node->right);
+}
+
+unsigned BSTreeInt::weight() const {
+	return weight(root);
+}
+
+unsigned BSTreeInt::weight(BSTNodeInt* node) const {
+	if (node == nullptr)
+		return 0;
+
+	if (node->left == nullptr && node->right == nullptr)
+		return 1;
+
+	return weight(node->left) + weight(node->right);
+}
+
+void BSTreeInt::deleteLeaves() {
+	deleteLeaves(root);
+}
+
+BSTNodeInt* BSTreeInt::deleteLeaves(BSTNodeInt* node) {
+	if (node == nullptr) {
+		return nullptr;
+	}
+	if (node->left == nullptr && node->right == nullptr) {
+		delete node;
+		return nullptr;
+	}
+	node->left = deleteLeaves(node->left);
+	node->right = deleteLeaves(node->right);
+
+	return node;
+}
+
+BSTreeInt* BSTreeInt::merge(BSTreeInt* tree1, BSTreeInt* tree2) {
+	BSTreeInt* merged = new BSTreeInt();
+
+	merge(merged, tree1->root, tree2->root);
+
+	return merged;
+}
+
+void BSTreeInt::merge(BSTreeInt* merged, BSTNodeInt* node1, BSTNodeInt* node2) {
+	if (node1 != nullptr) {
+		merge(merged, node1->left, nullptr);
+		merged->insert(node1->getKey());
+		merge(merged, node1->right, nullptr);
+	}
+	if (node2 != nullptr) {
+		merge(merged, nullptr, node2->left);
+		merged->insert(node2->getKey());
+		merge(merged, nullptr, node2->right);
+
+	}	
+}
+
+int indexOfMax(int* arr, int n) {
+	int maxi = 0;
+
+	for (int i = 0; i < n; i++)
+		if (arr[i] > arr[maxi])
+			maxi = i;
+	return maxi;
+}
+
+int BSTreeInt::maxWidthLevel() {
+	int* levels = new int[height()]();
+	maxWidthLevel(root, 0, levels);
+	return indexOfMax(levels, height());
+}
+
+void BSTreeInt::maxWidthLevel(BSTNodeInt* node, int level, int* levels) {
+	if (node == nullptr)
+		return;
+
+	levels[level]++;
+
+	maxWidthLevel(node->left, level + 1, levels);
+	maxWidthLevel(node->right, level + 1, levels);
+}
+
+int BSTreeInt::sumOfLeaves() {
+	return sumOfLeaves(root);
+}
+
+int BSTreeInt::sumOfLeaves(BSTNodeInt* node) {
+	if (node == nullptr)
+		return 0;
+
+	if (node->left == nullptr && node->right == nullptr)
+		return node->getKey();
+
+	return sumOfLeaves(node->left) + sumOfLeaves(node->right);	
+}
+
+bool BSTreeInt::isBalanced() {
+	return isBalanced(root);
+}
+
+int apsolutna(int x) {
+	if (x >= 0)
+		return x;
+	else
+		return -x;
+}
+
+bool BSTreeInt::isBalanced(BSTNodeInt* node) {
+	if (node != nullptr)
+	{
+		if (apsolutna(height(node->left) - height(node->right)) <= 1)
+			return true;
+		else 
+			return false;
 	}
 }

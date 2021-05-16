@@ -52,3 +52,18 @@ int BinaryMinHeapInt::deleteRoot()
 	array[pos] = last;
 	return result;
 }
+
+void BinaryMinHeapInt::heapSort(int* array, unsigned n) {
+	BinaryMinHeapInt heap(n + 1);
+
+	int i;
+
+	for (i = 0; i < n; i++) {
+		heap.insert(array[i]);
+	}
+
+	i = 0;
+	while (!heap.isEmpty()) {
+		array[i++] = heap.deleteRoot();
+	}
+}

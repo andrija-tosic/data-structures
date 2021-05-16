@@ -52,3 +52,19 @@ int BinaryMaxHeapInt::deleteRoot()
 	array[pos] = last;
 	return result;
 }
+
+
+void BinaryMaxHeapInt::heapSort(int* array, unsigned n) {
+	BinaryMaxHeapInt heap(n + 1);
+
+	int i;
+
+	for (i = 0; i < n; i++) {
+		heap.insert(array[i]);
+	}
+
+	i = 0;
+	while (!heap.isEmpty()) {
+		array[i++] = heap.deleteRoot();
+	}
+}
