@@ -23,6 +23,8 @@ protected:
 	void maxWidthLevel(BSTNodeInt* node, int level, int* levels);
 	int sumOfLeaves(BSTNodeInt* node);
 	bool isBalanced(BSTNodeInt* node);
+	int maxDifference(int& maxDif, BSTNodeInt* node);
+	BSTNodeInt* maxDiffNode(int& maxDif, BSTNodeInt* node);
 public:
 	BSTreeInt() { root = nullptr; numOfElements = 0; }
 	~BSTreeInt() { deleteTree(root); }
@@ -52,4 +54,5 @@ public:
 	int maxWidthLevel();
 	int sumOfLeaves();
 	bool isBalanced();
+	int maxDifference(int& maxDif);
 };

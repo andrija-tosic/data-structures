@@ -59,6 +59,8 @@ int main()
 
 	BSTreeInt* bst3 = BSTreeInt::merge(&bst1, &bst2);
 
+	std::cout << "Merged preorder: " << std::endl;
+	
 	bst3->preorder();
 
 	BSTreeInt bst4;
@@ -79,7 +81,38 @@ int main()
 
 	std::cout << "BST4 Sum of leaves: " << bst4.sumOfLeaves() << std::endl;
 
+	/*
+	bst4.insert(2);
+	bst4.insert(1);
+	bst4.insert(0);
+	bst4.insert(-1);
+	bst4.insert(-2);
+	*/
+
 	std::cout << "BST4 Balanced: " << bst4.isBalanced() << std::endl;
+
+	BSTreeInt bst5;
+
+	bst5.insert(15);
+	bst5.insert(13);
+	bst5.insert(2);
+	bst5.insert(3);
+	bst5.insert(4);
+	bst5.insert(5);
+	bst5.insert(14);
+	bst5.insert(16);
+	bst5.insert(17);
+	bst5.insert(18);
+	bst5.insert(19);
+	bst5.insert(20);
+
+	int maxDif;
+
+	std::cout << "BST5 Max difference: " << bst5.maxDifference(maxDif) << std::endl;
+
+	std::cout << "BST4 Successor of 6: " << bst4.getSuccessor(6) << std::endl;
+
+	std::cout << "BST4 Successor of 7: " << bst4.getSuccessor(7) << std::endl;
 
 	return 0;
 }

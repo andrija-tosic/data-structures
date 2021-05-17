@@ -255,6 +255,18 @@ BSTNodeInt* BSTreeInt::deleteLeaves(BSTNodeInt* node) {
 
 	return node;
 }
+/*
+BSTreeInt* BSTreeInt::mirrorCopy() {
+	BSTreeInt* mirrored = new BSTreeInt;
+	mirrorCopy(mirrored, root, mirrored->root);
+	return mirrored;
+}
+
+BSTreeInt* BSTreeInt::mirrorCopy(BSTreeInt* copy, BSTNodeInt* node1, BSTNodeInt* node2) {
+	copy->insert(node1->getKey());
+
+}
+*/
 
 BSTreeInt* BSTreeInt::merge(BSTreeInt* tree1, BSTreeInt* tree2) {
 	BSTreeInt* merged = new BSTreeInt();
@@ -284,13 +296,16 @@ int indexOfMax(int* arr, int n) {
 	for (int i = 0; i < n; i++)
 		if (arr[i] > arr[maxi])
 			maxi = i;
+
 	return maxi;
 }
 
 int BSTreeInt::maxWidthLevel() {
 	int* levels = new int[height()]();
 	maxWidthLevel(root, 0, levels);
-	return indexOfMax(levels, height());
+	int i = indexOfMax(levels, height());
+	delete[] levels;
+	return i;
 }
 
 void BSTreeInt::maxWidthLevel(BSTNodeInt* node, int level, int* levels) {
@@ -318,6 +333,7 @@ int BSTreeInt::sumOfLeaves(BSTNodeInt* node) {
 }
 
 bool BSTreeInt::isBalanced() {
+	int razlika;
 	return isBalanced(root);
 }
 
@@ -329,11 +345,50 @@ int apsolutna(int x) {
 }
 
 bool BSTreeInt::isBalanced(BSTNodeInt* node) {
-	if (node != nullptr)
-	{
-		if (apsolutna(height(node->left) - height(node->right)) <= 1)
-			return true;
-		else 
-			return false;
+	if (node == nullptr)
+		return true;
+
+	int razlika = apsolutna(height(node->left) - height(node->right));
+	
+	if (razlika > 1)
+		return false;
+
+	return isBalanced(node->left) && isBalanced(node->right);
+}
+
+int BSTreeInt::maxDifference(int& maxDif) {
+	return maxDifference(maxDif, root);
+}
+
+int BSTreeInt::maxDifference(int& maxDif, BSTNodeInt* node) {
+	return maxDiffNode(maxDif, node)->getKey();
+}
+
+BSTNodeInt* BSTreeInt::maxDiffNode(int& maxDif, BSTNodeInt* node) {
+	if (node == nullptr) {
+		maxDif = 0;
+		return nullptr;
 	}
+
+	int maxDifL, maxDifR;
+
+	BSTNodeInt* diffL = maxDiffNode(maxDifL, node->left);
+	BSTNodeInt* diffR = maxDiffNode(maxDifR, node->right);
+
+	int razlika = apsolutna(height(node->left) - height(node->right));
+
+	BSTNodeInt* maxPtr = node;
+	maxDif = razlika;
+	
+	if (maxDifL > maxDif) {
+		maxDif = maxDifL;
+		maxPtr = diffL;
+	}
+
+	if (maxDifR > maxDif) {
+		maxDif = maxDifR;
+		maxPtr = diffR;
+	}
+
+	return maxPtr;
 }
