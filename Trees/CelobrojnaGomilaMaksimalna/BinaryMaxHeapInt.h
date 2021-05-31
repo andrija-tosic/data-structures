@@ -7,6 +7,7 @@ private:
 	long length;
 	long numOfElements;
 
+	int find(int number);
 public:
 	BinaryMaxHeapInt(long len);
 	~BinaryMaxHeapInt() { delete[] array; };
@@ -18,6 +19,5 @@ public:
 	int deleteRoot();
 
 	static void heapSort(int* array, unsigned n);
-
+	bool isInHeap(int number);
 };
-

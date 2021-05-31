@@ -172,6 +172,31 @@ void BSTreeInt::iterativePreorder() const
 	}
 }
 
+void BSTreeInt::iterativeInorder() const {
+	BSTNodeInt* ptr = root;
+	StackAsArrayBSTNodeInt stack(numOfElements);
+	while (ptr != nullptr) {
+		while (ptr != nullptr) {
+			if (ptr->right != nullptr)
+				stack.push(ptr->right);
+
+			stack.push(ptr);
+			ptr = ptr->left;
+		}
+		ptr = stack.pop();
+		while (!stack.isEmpty() && ptr->right != nullptr) {
+			ptr->visit();
+			ptr = stack.pop();
+		}
+		ptr->visit();
+		if (!stack.isEmpty()) {
+			ptr = stack.pop();
+		}
+		else
+			ptr = nullptr;
+	}
+}
+
 void BSTreeInt::breadthFirstSearch() const
 {
 	BSTNodeInt* ptr = root;
@@ -255,18 +280,6 @@ BSTNodeInt* BSTreeInt::deleteLeaves(BSTNodeInt* node) {
 
 	return node;
 }
-/*
-BSTreeInt* BSTreeInt::mirrorCopy() {
-	BSTreeInt* mirrored = new BSTreeInt;
-	mirrorCopy(mirrored, root, mirrored->root);
-	return mirrored;
-}
-
-BSTreeInt* BSTreeInt::mirrorCopy(BSTreeInt* copy, BSTNodeInt* node1, BSTNodeInt* node2) {
-	copy->insert(node1->getKey());
-
-}
-*/
 
 BSTreeInt* BSTreeInt::merge(BSTreeInt* tree1, BSTreeInt* tree2) {
 	BSTreeInt* merged = new BSTreeInt();
@@ -392,3 +405,69 @@ BSTNodeInt* BSTreeInt::maxDiffNode(int& maxDif, BSTNodeInt* node) {
 
 	return maxPtr;
 }
+
+int BSTreeInt::longestLeftPath() {
+	int l = longestLeftPath(root->left, &root);
+	int r = longestLeftPath(root->right, &root);
+	return max(l, r);
+}
+
+int BSTreeInt::longestLeftPath(BSTNodeInt* node, BSTNodeInt** start) { // ova f menja start
+	int maxL, maxR;
+	BSTNodeInt** startL = start, ** startR = start, ** longestStart = start;
+	if (start != nullptr) {
+
+		maxL = 0;
+		maxR = 0;
+		longestLeftPath((*start)->left, start, maxL);
+		longestLeftPath((*start)->right, start, maxR);
+
+
+		maxL = 0;
+		maxR = 0;
+		longestLeftPath((*start)->left, &(*start)->left, maxL);
+		longestLeftPath((*start)->right, &(*start)->right, maxR);
+
+		if (maxL > maxR)
+			longestStart = &(*start)->left;
+		else
+			longestStart = &(*start)->right;
+	}
+
+	start = longestStart;
+	return max(maxL, maxR);
+}
+
+void BSTreeInt::longestLeftPath(BSTNodeInt* node, BSTNodeInt** start, int& maxP) {
+	if (node == nullptr) {
+		return;
+	}
+
+	longestLeftPath(node->left, start, ++maxP); // ova ide ulevo menja start
+}
+
+void BSTreeInt::balance(int* arr, int first, int last) {
+	if (first <= last) {
+		int s = (first + last) / 2;
+		insert(arr[s]);
+		balance(arr, first, s - 1);
+		balance(arr, s + 1, last);
+	}
+}
+
+void BSTreeInt::topmostNoChildren(BSTNodeInt* root, int level, BSTNodeInt** result, int* resultLevel)
+{
+	if (root == nullptr)
+		return;
+
+	if (root->left == nullptr && root->right == nullptr && level < *resultLevel) {
+		*resultLevel = level;
+		result = &root;
+	}
+	else {
+		topmostNoChildren(root->left, level + 1, result, resultLevel);
+		topmostNoChildren(root->right, level + 1, result, resultLevel);
+	}
+}
+
+

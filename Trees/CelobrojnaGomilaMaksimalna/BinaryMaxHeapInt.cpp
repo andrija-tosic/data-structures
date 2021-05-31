@@ -3,6 +3,7 @@
 #include <exception>
 using namespace std;
 
+
 BinaryMaxHeapInt::BinaryMaxHeapInt(long len)
 {
 	length = len;
@@ -57,7 +58,7 @@ int BinaryMaxHeapInt::deleteRoot()
 void BinaryMaxHeapInt::heapSort(int* array, unsigned n) {
 	BinaryMaxHeapInt heap(n + 1);
 
-	int i;
+	unsigned i;
 
 	for (i = 0; i < n; i++) {
 		heap.insert(array[i]);
@@ -67,4 +68,24 @@ void BinaryMaxHeapInt::heapSort(int* array, unsigned n) {
 	while (!heap.isEmpty()) {
 		array[i++] = heap.deleteRoot();
 	}
+}
+
+int BinaryMaxHeapInt::find(int number)
+{
+	int pos = 1;
+	while (pos <= numOfElements && array[pos] > number
+		&& array[pos] != number && array[pos+1] != number) {
+		pos *= 2;
+	}
+	if (array[pos+1] == number)
+		return pos+1;
+	else if (array[pos] == number)
+		return pos;
+	else
+		return -1;
+}
+
+bool BinaryMaxHeapInt::isInHeap(int number)
+{
+	return find(number) >= 1;
 }

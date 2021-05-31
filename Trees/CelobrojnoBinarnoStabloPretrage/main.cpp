@@ -81,13 +81,13 @@ int main()
 
 	std::cout << "BST4 Sum of leaves: " << bst4.sumOfLeaves() << std::endl;
 
-	/*
+	
 	bst4.insert(2);
 	bst4.insert(1);
 	bst4.insert(0);
 	bst4.insert(-1);
 	bst4.insert(-2);
-	*/
+	
 
 	std::cout << "BST4 Balanced: " << bst4.isBalanced() << std::endl;
 
@@ -110,9 +110,20 @@ int main()
 
 	std::cout << "BST5 Max difference: " << bst5.maxDifference(maxDif) << std::endl;
 
-	std::cout << "BST4 Successor of 6: " << bst4.getSuccessor(6) << std::endl;
+	std::cout << "BST4 Longest left path: " << bst4.longestLeftPath() << std::endl;
+	std::cout << "BST5 Longest left path: " << bst5.longestLeftPath() << std::endl;
 
-	std::cout << "BST4 Successor of 7: " << bst4.getSuccessor(7) << std::endl;
+	BSTreeInt bst6;
+	bst6.insert(4);
+	bst6.insert(1);
+	bst6.insert(5);
+	bst6.insert(2);
+	bst6.insert(3);
+	bst6.insert(6);
+
+	int level;
+	bst6.topmostNoChildren(&level);
+	std::cout << "Topmost no children bst6: " << level << std::endl;
 
 	return 0;
 }

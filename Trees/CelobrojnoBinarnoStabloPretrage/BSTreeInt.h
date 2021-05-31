@@ -25,6 +25,8 @@ protected:
 	bool isBalanced(BSTNodeInt* node);
 	int maxDifference(int& maxDif, BSTNodeInt* node);
 	BSTNodeInt* maxDiffNode(int& maxDif, BSTNodeInt* node);
+	int longestLeftPath(BSTNodeInt* node, BSTNodeInt** start);
+	void longestLeftPath(BSTNodeInt* node, BSTNodeInt** start, int& maxP);
 public:
 	BSTreeInt() { root = nullptr; numOfElements = 0; }
 	~BSTreeInt() { deleteTree(root); }
@@ -45,6 +47,9 @@ public:
 	void iterativePreorder() const;
 	void breadthFirstSearch() const;
 
+	void iterativeInorder() const;
+	void iterativePostorder() const;
+
 
 	unsigned numberOfDistinctNodes() const;
 	unsigned height() const;
@@ -55,4 +60,11 @@ public:
 	int sumOfLeaves();
 	bool isBalanced();
 	int maxDifference(int& maxDif);
+	int longestLeftPath();
+	void balance(int* arr, int first, int last);
+	void topmostNoChildren(BSTNodeInt* root, int level, BSTNodeInt** result, int* resultLevel);
+	void topmostNoChildren(int* resultLevel) {
+		*resultLevel = 200000;
+		topmostNoChildren(root, 0, nullptr, resultLevel);
+	}
 };
