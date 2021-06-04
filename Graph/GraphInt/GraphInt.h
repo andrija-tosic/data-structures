@@ -2,6 +2,8 @@
 
 //#include "LinkedEdgeInt.h"
 #include "LinkedNodeInt.h"
+#include "QueueAsArrayInt.h"
+#include <climits>
 
 class GraphAsListsInt
 {
@@ -42,14 +44,34 @@ public:
 	int maxOutputDegree();
 	int noOutputDegree();
 	int noInputDegree();
-	bool isStronglyConnected();
-	double** formAdjacencyMatrix();
-	void formGraphFromAdjacencyMatrix(double** mat, int n);
+	double** formWeightMatrix();
+	void formGraphFromWeightMatrix(double** mat, int n);
 	int subGraph(LinkedNodeInt* p); // 2. kolokvijum 2019.
 	void toUndirected(); // 2. kolokvijum 2019.
 	int maxSubgraph(); // 2. kolokvijum 2019.
 	int CalcPrevious(int subjects[], int n); // popravni 2. kolokvijum 2018.
+public:
 	LinkedNodeInt* FindMaxReachable(); // 2. kolokvijum 2017.
-	int FindMaxReachable(LinkedNodeInt* node);
+private:
+	int FindMaxReachable(LinkedNodeInt* LinkedNodeInt);
+public:
+	void put(int A, int B, int x, LinkedNodeInt** niz, int* n);
+private:
+	void put(LinkedNodeInt* ptr, LinkedNodeInt* ptrB, int x, LinkedNodeInt** niz, int* n);
+public:
+	bool hasCycle();
+private:
+	bool hasCycle(LinkedNodeInt* ptr);
+public:
+	bool canConnect(int a, int b, int n); // jun 2020.
+private:
+	bool canConnect(LinkedNodeInt* ptr, LinkedNodeInt* dest, int n, int count);
+	bool canConnectBFS(LinkedNodeInt* ptrA, LinkedNodeInt* ptrB, int n);
+public:
+	int findLeastNodesPathDFS(int a, int b); // jun 2 2020.
+	int findLeastNodesPathBFS(int a, int b);
+private:
+	void setPrevForAllNodes(LinkedNodeInt* node);
+	void findLeastNodesPathDFS(LinkedNodeInt* node, LinkedNodeInt* last, int c, int& min);
+	int findLeastNodesPathBFS(LinkedNodeInt* start, LinkedNodeInt* last);
 };
-

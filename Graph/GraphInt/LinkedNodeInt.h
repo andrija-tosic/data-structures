@@ -9,6 +9,7 @@ public:
 	LinkedEdgeInt* adj;
 	LinkedNodeInt* next;
 	int status;
+	LinkedNodeInt* BFSprev;
 
 	LinkedNodeInt();
 	LinkedNodeInt(int nodeN);
