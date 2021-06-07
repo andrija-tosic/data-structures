@@ -772,3 +772,30 @@ int GraphAsListsInt::findLeastNodesPathBFS(LinkedNodeInt* start, LinkedNodeInt* 
 	
 	return length;
 }
+
+int GraphAsListsInt::FindMax(/* char* */ int airport) { // januar 2017.
+	int max = 0;
+	LinkedNodeInt* port = findNode(airport);
+	setStatusForAllNodes(INT_MAX);
+	port->status = INT_MAX;
+	updateDistanceFrom(port, 0);
+	LinkedNodeInt* ptr = start;
+	while (ptr) {
+		if (ptr != port && ptr->status != INT_MAX && ptr->status > max)
+			max = ptr->status;
+
+		ptr = ptr->next;
+	}
+	return max;
+}
+
+void GraphAsListsInt::updateDistanceFrom(LinkedNodeInt* node, int depth) {
+	if (depth < node->status) {
+		node->status = depth;
+		LinkedEdgeInt* edge = node->adj;
+		while (edge != nullptr) {
+			updateDistanceFrom(edge->dest, depth + 1);
+			edge = edge->link;
+		}
+	}
+}

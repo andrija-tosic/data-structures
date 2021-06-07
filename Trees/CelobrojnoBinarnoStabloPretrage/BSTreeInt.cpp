@@ -346,7 +346,6 @@ int BSTreeInt::sumOfLeaves(BSTNodeInt* node) {
 }
 
 bool BSTreeInt::isBalanced() {
-	int razlika;
 	return isBalanced(root);
 }
 
@@ -455,6 +454,11 @@ void BSTreeInt::balance(int* arr, int first, int last) {
 	}
 }
 
+void BSTreeInt::topmostNoChildren(int* resultLevel) {
+	*resultLevel = INT_MAX;
+	topmostNoChildren(root, 0, nullptr, resultLevel);
+}
+
 void BSTreeInt::topmostNoChildren(BSTNodeInt* root, int level, BSTNodeInt** result, int* resultLevel)
 {
 	if (root == nullptr)
@@ -470,4 +474,52 @@ void BSTreeInt::topmostNoChildren(BSTNodeInt* root, int level, BSTNodeInt** resu
 	}
 }
 
+int BSTreeInt::closestValueLeaf(int value) {
+	return closestValueLeaf(root, value)->getKey();
+}
 
+BSTNodeInt* BSTreeInt::closestValueLeaf(BSTNodeInt* root, int value) {
+	if (root == nullptr)
+		return nullptr;
+
+	BSTNodeInt* ptr = nullptr;
+	int min = INT_MAX;
+
+	closestValueLeafDiff(root, value, &ptr, min);
+
+	return ptr;
+}
+
+void BSTreeInt::closestValueLeafDiff(BSTNodeInt* node, int value, BSTNodeInt** minNode, int& min) {
+	if (node == nullptr)
+		return;
+
+	closestValueLeafDiff(node->left, value, minNode, min);
+	closestValueLeafDiff(node->right, value, minNode, min);
+
+	if (node->left == nullptr && node->right == nullptr) {
+		if (abs(node->getKey() - value) < min) {
+			min = abs(node->getKey() - value);
+			*minNode = node;
+		}
+	}
+}
+
+int BSTreeInt::getDepth(int val) {
+	int l = 0;
+	return getDepth(root, val, l);
+}
+
+int BSTreeInt::getDepth(BSTNodeInt* node, int dest, int level) {
+	if (node == nullptr)
+		return 0;
+
+	if (node->getKey() == dest)
+		return level;
+
+	int retVal = 0;
+	retVal += getDepth(node->left, dest, level + 1);
+	retVal += getDepth(node->right, dest, level + 1);
+
+	return retVal;
+}

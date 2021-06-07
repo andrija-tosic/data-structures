@@ -147,5 +147,12 @@ int main(int argc, char* argv[])
 
 	cout << "DFS time: " << duration_cast<milliseconds>(stopDFS - startDFS).count() << " ms" << endl;
 	cout << "BFS time: " << duration_cast<milliseconds>(stopBFS - startBFS).count() << " ms" << endl;
+
+	cout << "Ekscentricitet cvora 1: " << graph.FindMax(1) << endl;
+	cout << "Ekscentricitet cvora 2: " << graph.FindMax(2) << endl;
+	cout << "Ekscentricitet cvora 3: " << graph.FindMax(3) << endl;
+	cout << "Ekscentricitet cvora 4: " << graph.FindMax(4) << endl;
+	cout << "Ekscentricitet cvora 5: " << graph.FindMax(5) << endl;
+
 	return 0;
 }

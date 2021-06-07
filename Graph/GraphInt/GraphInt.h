@@ -30,6 +30,7 @@ public:
 
 public:
 	void setStatusForAllNodes(int status) const;
+	void setPrevForAllNodes(LinkedNodeInt* node);
 public:
 	long breadthFirstTraversal(const int& data) const;
 	long depthFirstTraversalIterative(const int& data) const;
@@ -71,7 +72,9 @@ public:
 	int findLeastNodesPathDFS(int a, int b); // jun 2 2020.
 	int findLeastNodesPathBFS(int a, int b);
 private:
-	void setPrevForAllNodes(LinkedNodeInt* node);
 	void findLeastNodesPathDFS(LinkedNodeInt* node, LinkedNodeInt* last, int c, int& min);
 	int findLeastNodesPathBFS(LinkedNodeInt* start, LinkedNodeInt* last);
+public:
+	int FindMax(/* char* */ int airport); // januar 2017.
+	void updateDistanceFrom(LinkedNodeInt* node, int depth);
 };

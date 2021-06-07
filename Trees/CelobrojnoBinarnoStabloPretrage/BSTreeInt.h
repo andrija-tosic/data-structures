@@ -63,8 +63,10 @@ public:
 	int longestLeftPath();
 	void balance(int* arr, int first, int last);
 	void topmostNoChildren(BSTNodeInt* root, int level, BSTNodeInt** result, int* resultLevel);
-	void topmostNoChildren(int* resultLevel) {
-		*resultLevel = 200000;
-		topmostNoChildren(root, 0, nullptr, resultLevel);
-	}
+	void topmostNoChildren(int* resultLevel);
+	int closestValueLeaf(int value);
+	BSTNodeInt* closestValueLeaf(BSTNodeInt* root, int value); // jun 2 2020.
+	void closestValueLeafDiff(BSTNodeInt* node, int value, BSTNodeInt** minNode, int& min);
+	int getDepth(int val);
+	int getDepth(BSTNodeInt* node, int dest, int level);
 };

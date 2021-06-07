@@ -125,5 +125,13 @@ int main()
 	bst6.topmostNoChildren(&level);
 	std::cout << "Topmost no children bst6: " << level << std::endl;
 
+	std::cout << "BST6 closestValueLeaf node: " << bst6.closestValueLeaf(6) << std::endl;
+
+	std::cout << "BST6 Depth of node 1: " << bst6.getDepth(1) << std::endl;
+	std::cout << "BST6 Depth of node 2: " << bst6.getDepth(2) << std::endl;
+	std::cout << "BST6 Depth of node 3: " << bst6.getDepth(3) << std::endl;
+	std::cout << "BST6 Depth of node 4: " << bst6.getDepth(4) << std::endl;
+	std::cout << "BST6 Depth of node 5: " << bst6.getDepth(5) << std::endl;
+	std::cout << "BST6 Depth of node 6: " << bst6.getDepth(6) << std::endl;
 	return 0;
 }

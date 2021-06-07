@@ -17,18 +17,18 @@ void Update(int val, int add) {
 }
 
 
-Node* maxSum(Node* p, int& maxS) {
+Node* maxSum(Node* p, int& maxS) { // ovo ni ne radi
 	if (p == nullptr) {
 		maxS = -1;
 		return nullptr;
 	}
 	
-	int sumL, sumR;
+	int maxL, maxR;
 	
-	Node* ptrL = maxSum(p->left, sumL);
-	Node* ptrR = maxSum(p->right, sumR);
+	Node* ptrL = maxSum(p->left, maxL);
+	Node* ptrR = maxSum(p->right, maxR);
 	
-	int lv = 0, dv = 0;
+	int lv = 0, rv = 0;
 	
 	if (p->left != nullptr)
 		lv = p->left->key;
@@ -38,13 +38,15 @@ Node* maxSum(Node* p, int& maxS) {
 	
 	maxS = lv + rv;
 	
-	if (sumL > maxS) {
-		maxS = sumL;
+	Node* maxPtr = nullptr;
+	
+	if (maxL > maxS) {
+		maxS = maxL;
 		maxPtr = ptrL;
 	}
 	
-	if (sumR > maxS) {
-		maxS = sumR;
+	if (maxR > maxS) {
+		maxS = maxR;
 		maxPtr = ptrR;
 	}
 	return maxPtr;
