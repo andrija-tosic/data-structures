@@ -30,7 +30,7 @@ public:
 
 public:
 	void setStatusForAllNodes(int status) const;
-	void setPrevForAllNodes(LinkedNodeInt* node);
+	// void setPrevForAllNodes(LinkedNodeInt* node);
 public:
 	long breadthFirstTraversal(const int& data) const;
 	long depthFirstTraversalIterative(const int& data) const;
