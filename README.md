@@ -41,6 +41,10 @@
            <li>Statička implementacija preko polja</li>
         </ul>
     </ul>
+    <li>Grafovi</li>
+        <ul>
+            <li>Dinamička implementacija usmerenog težinskog grafa</li>
+        </ul>
 </ol>
 
  <img src="complexity.png" width="1000" alt="Complexity chart">
