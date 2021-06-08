@@ -77,4 +77,5 @@ private:
 public:
 	int FindMax(/* char* */ int airport); // januar 2017.
 	void updateDistanceFrom(LinkedNodeInt* node, int depth);
+	int updateDistanceFromBFS(LinkedNodeInt* node);
 };

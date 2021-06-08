@@ -777,7 +777,7 @@ int GraphAsListsInt::findLeastNodesPathBFS(LinkedNodeInt* start, LinkedNodeInt* 
 */
 
 int GraphAsListsInt::findLeastNodesPathBFS(LinkedNodeInt* start, LinkedNodeInt* last) {
-	setStatusForAllNodes(0);
+	setStatusForAllNodes(-1);
 	QueueAsArrayLinkedNodeInt queue(nodeNum);
 	LinkedNodeInt* node = start;
 	node->status = 0;
@@ -789,16 +789,18 @@ int GraphAsListsInt::findLeastNodesPathBFS(LinkedNodeInt* start, LinkedNodeInt* 
 		}
 		LinkedEdgeInt* edge = node->adj;
 		while (edge) {
-			if (edge->dest->status == 0) {
+			if (edge->dest->status == -1) {
 				edge->dest->status = node->status + 1;
 				queue.enqueue(edge->dest);
 			}
 			edge = edge->link;
 		}
 	}
+	return -1;
 }
 
-int GraphAsListsInt::FindMax(/* char* */ int airport) { // januar 2017.
+/*
+int GraphAsListsInt::FindMax(char* airport) { // januar 2017.
 	int max = 0;
 	LinkedNodeInt* port = findNode(airport);
 	setStatusForAllNodes(INT_MAX);
@@ -810,6 +812,37 @@ int GraphAsListsInt::FindMax(/* char* */ int airport) { // januar 2017.
 			max = ptr->status;
 
 		ptr = ptr->next;
+	}
+	return max;
+}
+*/
+
+int GraphAsListsInt::FindMax(/* char* */ int airport) { // januar 2017.
+	return updateDistanceFromBFS(findNode(airport));
+}
+
+int GraphAsListsInt::updateDistanceFromBFS(LinkedNodeInt* node) {
+	setStatusForAllNodes(-1);
+	int max = 0;
+	QueueAsArrayLinkedNodeInt queue(nodeNum);
+	LinkedNodeInt* ptr = node;
+	ptr->status = 0;
+	queue.enqueue(ptr);
+	while (!queue.isEmpty()) {
+		ptr = queue.dequeue();
+
+		LinkedEdgeInt* edge = ptr->adj;
+		while (edge) {
+			if (edge->dest->status == -1) {
+				edge->dest->status = ptr->status + 1;
+				
+				if (ptr->status + 1 > max)
+					max = ptr->status + 1;
+
+				queue.enqueue(edge->dest);
+			}
+			edge = edge->link;
+		}
 	}
 	return max;
 }
