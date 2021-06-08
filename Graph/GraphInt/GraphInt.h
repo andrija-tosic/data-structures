@@ -54,7 +54,7 @@ public:
 public:
 	LinkedNodeInt* FindMaxReachable(); // 2. kolokvijum 2017.
 private:
-	int FindMaxReachable(LinkedNodeInt* LinkedNodeInt);
+	int FindMaxReachable(LinkedNodeInt* LinkedNodeInt); // 2. kolokvijum 2017.
 public:
 	void put(int A, int B, int x, LinkedNodeInt** niz, int* n);
 private:
@@ -66,16 +66,17 @@ private:
 public:
 	bool canConnect(int a, int b, int n); // jun 2020.
 private:
-	bool canConnect(LinkedNodeInt* ptr, LinkedNodeInt* dest, int n, int count);
-	bool canConnectBFS(LinkedNodeInt* ptrA, LinkedNodeInt* ptrB, int n);
+	bool canConnectDFS(LinkedNodeInt* ptr, LinkedNodeInt* dest, int n, int count); // jun 2020.
+	bool canConnectBFS(LinkedNodeInt* ptrA, LinkedNodeInt* ptrB, int n); // jun 2020.
 public:
 	int findLeastNodesPathDFS(int a, int b); // jun 2 2020.
-	int findLeastNodesPathBFS(int a, int b);
+	int findLeastNodesPathBFS(int a, int b); // jun 2 2020.
 private:
-	void findLeastNodesPathDFS(LinkedNodeInt* node, LinkedNodeInt* last, int c, int& min);
-	int findLeastNodesPathBFS(LinkedNodeInt* start, LinkedNodeInt* last);
+	void findLeastNodesPathDFS(LinkedNodeInt* node, LinkedNodeInt* last, int c, int& min); // jun 2 2020.
+	int findLeastNodesPathBFS(LinkedNodeInt* start, LinkedNodeInt* last); // jun 2 2020.
 public:
 	int FindMax(/* char* */ int airport); // januar 2017.
-	void updateDistanceFrom(LinkedNodeInt* node, int depth);
-	int updateDistanceFromBFS(LinkedNodeInt* node);
+private:
+	void updateDistanceFromDFS(LinkedNodeInt* node, int depth); // januar 2017.
+	int updateDistanceFromBFS(LinkedNodeInt* node); // januar 2017.
 };
