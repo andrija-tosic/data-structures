@@ -1,6 +1,12 @@
 #include "BSTreeInt.h"
 #include <iostream>
 
+const char* boolToString(bool a) {
+	if (a)
+		return "true";
+	else return "false";
+}
+
 int main()
 {
 	BSTreeInt bst;
@@ -133,5 +139,38 @@ int main()
 	std::cout << "BST6 Depth of node 4: " << bst6.getDepth(4) << std::endl;
 	std::cout << "BST6 Depth of node 5: " << bst6.getDepth(5) << std::endl;
 	std::cout << "BST6 Depth of node 6: " << bst6.getDepth(6) << std::endl;
+
+	BSTreeInt bst7;
+	bst7.insert(8);
+	bst7.insert(5);
+	bst7.insert(9);
+	bst7.insert(1);
+	bst7.insert(6);
+
+	
+	// bst7.insert(10);
+	
+	/*
+	bst7.insert(11);
+	bst7.insert(12);
+	bst7.insert(13);
+	bst7.insert(14);
+	bst7.insert(15);
+	bst7.insert(16);
+	bst7.insert(17);
+	bst7.insert(18);
+	bst7.insert(19);
+	bst7.insert(20);
+	bst7.insert(21);
+	*/
+
+	// std::cout << "BST7 level of max diff: " << bst7.GetMaxLevel() << std::endl;
+
+	std::cout << "BST7 nodes with key larger than 3: " << bst7.CountGreater(3) << std::endl;
+
+	// std::cout << "BST7 deepest node: " << bst7.getDeepest() << std::endl;
+
+	std::cout << "BST7 perfectly balanced? " << boolToString(bst7.balanced()) << std::endl;
+
 	return 0;
 }

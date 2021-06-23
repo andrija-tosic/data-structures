@@ -1,6 +1,7 @@
 #pragma once
 
 #include "LinkedEdgeInt.h"
+#define PREV_POINTER 0
 
 class LinkedNodeInt
 {

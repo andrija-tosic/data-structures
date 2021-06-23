@@ -5,14 +5,31 @@ void Update(int val, int add) {
 		i++
 	}
 	if (i <= numOfElements && arr[i] == val) {
-		arr[i] += add;
-		
-		int br = arr[i];
-		while(i <= numOfElements/2 && arr[2*i] < arr[i] && arr[2*i+1] < arr[i]) {
-			arr[i] = arr[2*i];
-			i *= 2;
+		if (add < 0) { // slucaj za upHeap
+			int pom = arr[i];
+			while (arr[i/2] > arr[i] && i >= 2) {
+				arr[i] = arr[i/2];
+				i /= 2;
+			}
+
+			arr[i] = pom;
 		}
-		arr[i] = br;
+		else if (add > 0) // slucaj za downHeap
+		{
+			int pom = arr[i];
+			while (arr[2*i] > arr[i] || arr[2*i + 1] > arr[i] && i <= numOfElements/2) {
+				if (arr[2*i] > arr[2*i + 1]) {
+					arr[i] = arr[2*i];
+					i = 2*i;
+				}
+				else {
+					arr[i] = arr[2*i + 1];
+					i = 2*i + 1;
+				}
+			}
+
+			arr[i] = pom;
+		}
 	}
 }
 
@@ -51,3 +68,42 @@ Node* maxSum(Node* p, int& maxS) { // ovo ni ne radi
 	}
 	return maxPtr;
 }
+
+int LevelDiff(int v1, int v2) { // april 2018.
+	int l1  = -1, l2  = -1;
+	levelDiff(root, v1, v2, l1, l2, 0);
+	return a-b;
+}
+
+void levelDiff(Node* p, int v1, int v2, int& l1, int& l2, int d) { // april 2018.
+	if (!p)
+		return;
+	
+	if (p->key == v1)
+		l1 = d;
+	
+	if (p->key == v2)
+		l2 = d;
+		
+	if (l1 != -1 && l2 != -1)
+		return;
+	else {
+		levelDiff(p->left, v1, v2, l1, l2, d+1);
+		levelDiff(p->right, v1, v2, l1, l2, d+1);
+	}
+}
+
+ int Sum(Node* p, int min, int max, int d) { // decembar 2017.
+ 	if (!p)
+ 		return 0;
+ 		
+ 	int s = 0;
+ 	
+ 	s += Sum(p->left, min, max, d+1);
+ 	s += Sum(p->right, min, max, d+1);
+ 	
+ 	if (min < d && d < max)
+ 		s++;
+ 	
+ 	return s;
+ }

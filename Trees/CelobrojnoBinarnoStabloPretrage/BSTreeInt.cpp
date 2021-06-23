@@ -406,43 +406,18 @@ BSTNodeInt* BSTreeInt::maxDiffNode(int& maxDif, BSTNodeInt* node) {
 }
 
 int BSTreeInt::longestLeftPath() {
-	int l = longestLeftPath(root->left, &root);
-	int r = longestLeftPath(root->right, &root);
-	return max(l, r);
+	int l = 0;
+	longestLeftPath(root, l, 0);
+	return l;
 }
 
-int BSTreeInt::longestLeftPath(BSTNodeInt* node, BSTNodeInt** start) { // ova f menja start
-	int maxL, maxR;
-	BSTNodeInt** startL = start, ** startR = start, ** longestStart = start;
-	if (start != nullptr) {
-
-		maxL = 0;
-		maxR = 0;
-		longestLeftPath((*start)->left, start, maxL);
-		longestLeftPath((*start)->right, start, maxR);
-
-
-		maxL = 0;
-		maxR = 0;
-		longestLeftPath((*start)->left, &(*start)->left, maxL);
-		longestLeftPath((*start)->right, &(*start)->right, maxR);
-
-		if (maxL > maxR)
-			longestStart = &(*start)->left;
-		else
-			longestStart = &(*start)->right;
-	}
-
-	start = longestStart;
-	return max(maxL, maxR);
-}
-
-void BSTreeInt::longestLeftPath(BSTNodeInt* node, BSTNodeInt** start, int& maxP) {
-	if (node == nullptr) {
+void BSTreeInt::longestLeftPath(BSTNodeInt* node, int& l, int depth) {
+	if (!node)
 		return;
-	}
-
-	longestLeftPath(node->left, start, ++maxP); // ova ide ulevo menja start
+	if (depth > l)
+		l = depth;
+	longestLeftPath(node->left, l, depth + 1);
+	longestLeftPath(node->right, l, 0);
 }
 
 void BSTreeInt::balance(int* arr, int first, int last) {
@@ -522,4 +497,45 @@ int BSTreeInt::getDepth(BSTNodeInt* node, int dest, int level) {
 	retVal += getDepth(node->right, dest, level + 1);
 
 	return retVal;
+}
+
+int BSTreeInt::CountGreater(int value)
+{
+	return countGreater(root, value);
+}
+
+int BSTreeInt::countGreater(BSTNodeInt* node, int value)
+{
+	if (!node)
+		return 0;
+
+	int count = 0;
+	if (node->key > value) {
+		count++;
+		count += countGreater(node->left, value);
+	}
+	count += countGreater(node->right, value);
+
+	return count;
+}
+
+bool BSTreeInt::balanced() { // 2. kolokvijum 2014.
+	bool bal = true;
+	count(root, bal);
+	return bal;
+}
+int BSTreeInt::count(BSTNodeInt* node, bool& bal) { // 2. kolokvijum 2014.
+	if (bal) {
+		if (!node)
+			return 0;
+
+		int l = 0, r = 0;
+		l = count(node->left, bal);
+		r = count(node->right, bal);
+		int d = abs(l - r);
+		bal = d <= 1;
+		return 1 + count(node->left, bal) + count(node->right, bal);
+	}
+	else
+		return 0;
 }

@@ -25,8 +25,6 @@ protected:
 	bool isBalanced(BSTNodeInt* node);
 	int maxDifference(int& maxDif, BSTNodeInt* node);
 	BSTNodeInt* maxDiffNode(int& maxDif, BSTNodeInt* node);
-	int longestLeftPath(BSTNodeInt* node, BSTNodeInt** start);
-	void longestLeftPath(BSTNodeInt* node, BSTNodeInt** start, int& maxP);
 public:
 	BSTreeInt() { root = nullptr; numOfElements = 0; }
 	~BSTreeInt() { deleteTree(root); }
@@ -61,12 +59,29 @@ public:
 	bool isBalanced();
 	int maxDifference(int& maxDif);
 	int longestLeftPath();
+private:
+	void longestLeftPath(BSTNodeInt* node, int& l, int depth);
+public:
 	void balance(int* arr, int first, int last);
 	void topmostNoChildren(BSTNodeInt* root, int level, BSTNodeInt** result, int* resultLevel);
 	void topmostNoChildren(int* resultLevel);
+public:
 	int closestValueLeaf(int value);
+private:
 	BSTNodeInt* closestValueLeaf(BSTNodeInt* root, int value); // jun 2 2020.
+private:
 	void closestValueLeafDiff(BSTNodeInt* node, int value, BSTNodeInt** minNode, int& min);
+public:
 	int getDepth(int val);
+private:
 	int getDepth(BSTNodeInt* node, int dest, int level);
+public:
+	int CountGreater(int value); // popravni 2. kolokvijum 2015.
+private:
+	int countGreater(BSTNodeInt* node, int value);
+public:
+public:
+	bool balanced();// 2. kolokvijum 2014.
+private:
+	int count(BSTNodeInt* node, bool& bal); // 2. kolokvijum 2014.
 };

@@ -77,6 +77,10 @@ private:
 public:
 	int FindMax(/* char* */ int airport); // januar 2017.
 private:
-	void updateDistanceFromDFS(LinkedNodeInt* node, int depth); // januar 2017.
-	int updateDistanceFromBFS(LinkedNodeInt* node); // januar 2017.
+	void updateDistanceFromNodeDFS(LinkedNodeInt* node, int depth); // januar 2017.
+	int updateDistanceFromNodeBFS(LinkedNodeInt* node); // januar 2017.
+public:
+	bool wordExists(char* wordToFind); // popravni 2. kolokvijum 2015.
+private:
+	void wordExists(LinkedNodeInt* node, char* wordToFind, int depth, bool& exists);
 };

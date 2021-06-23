@@ -154,5 +154,14 @@ int main(int argc, char* argv[])
 	cout << "Ekscentricitet cvora 4: " << graph.FindMax(4) << endl;
 	cout << "Ekscentricitet cvora 5: " << graph.FindMax(5) << endl;
 
+	char* str = new char[6];
+	strcpy_s(str, 6, "13542");
+	graph.insertNode(0);
+	graph.insertEdge(2, 0);
+	graph.print();
+	cout << "Word exists? " << boolToString(graph.wordExists(str)) << std::endl;
+
+	delete[] str;
+
 	return 0;
 }

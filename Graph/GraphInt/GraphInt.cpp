@@ -401,7 +401,7 @@ double** GraphAsListsInt::formWeightMatrix()
 {
 	double** matrix = new double*[nodeNum]();
 	for (int i = 0; i < nodeNum; i++) {
-		matrix[i] = new double[nodeNum]();
+		matrix[i] = new double[nodeNum];
 	}
 
 	LinkedNodeInt* ptr = start;
@@ -413,14 +413,12 @@ double** GraphAsListsInt::formWeightMatrix()
 	}
 
 	ptr = start;
-	i = 0;
 	while (ptr != nullptr) {
 		LinkedEdgeInt* edge = ptr->adj;
 		while (edge != nullptr) {
-			matrix[i][edge->dest->status] = edge->weight;
+			matrix[ptr->status][edge->dest->status] = edge->weight;
 			edge = edge->link;
 		}	
-		i++;
 		ptr = ptr->next;
 	}
 
@@ -465,6 +463,7 @@ void GraphAsListsInt::toUndirected() // 2. kolokvijum 2019.
 	while (ptr != nullptr) {
 		LinkedEdgeInt* edge = ptr->adj;
 		while (edge != nullptr) {
+
 			bool alreadyContains = false;
 			LinkedEdgeInt* edge2 = edge->dest->adj;
 			while (edge2 != nullptr && !alreadyContains) {
@@ -473,6 +472,7 @@ void GraphAsListsInt::toUndirected() // 2. kolokvijum 2019.
 				}
 				edge2 = edge2->link;
 			}
+
 			if (!alreadyContains) {
 				insertEdge(edge->dest->node, ptr->node);
 			}
@@ -503,7 +503,8 @@ int GraphAsListsInt::CalcPrevious(int subjects[], int n) // popravni 2. kolokvij
 	setStatusForAllNodes(0);
 	for (int i = 0; i < n; i++) {
 		LinkedNodeInt* ptr = findNode(subjects[i]);
-		if (ptr != nullptr) {
+		if (ptr != nullptr && ptr->status == 0) {
+			ptr->status = 1;
 			LinkedEdgeInt* edge = ptr->adj;
 			while (edge != nullptr) {
 				if (edge->dest->status == 0) {
@@ -634,7 +635,6 @@ bool GraphAsListsInt::canConnect(int a, int b, int n) { // jun 2020.
 	if (ptrA == ptrB)
 		return true;
 
-	// return canConnect(ptrA, ptrB, n, 0);
 	return canConnectBFS(ptrA, ptrB, n);
 }
 
@@ -684,6 +684,7 @@ bool GraphAsListsInt::canConnectBFS(LinkedNodeInt* ptrA, LinkedNodeInt* ptrB, in
 	return false;
 }
 
+// (neefikasno DFS)
 int GraphAsListsInt::findLeastNodesPathDFS(int a, int b) { // jun 2 2020.
 	LinkedNodeInt* first = findNode(a);
 	LinkedNodeInt* last = findNode(b);
@@ -697,6 +698,7 @@ int GraphAsListsInt::findLeastNodesPathDFS(int a, int b) { // jun 2 2020.
 	return min;
 }
 
+// (neefikasno DFS)
 void GraphAsListsInt::findLeastNodesPathDFS(LinkedNodeInt* node, LinkedNodeInt* last, int c, int& min) { // jun 2 2020.
 	LinkedEdgeInt* edge = node->adj;
 	if (c < min && node == last)
@@ -710,17 +712,6 @@ void GraphAsListsInt::findLeastNodesPathDFS(LinkedNodeInt* node, LinkedNodeInt* 
 		}
 	}
 }
-
-/*
-void GraphAsListsInt::setPrevForAllNodes(LinkedNodeInt* node)
-{
-	LinkedNodeInt* ptr = start;
-	while (ptr != nullptr) {
-		ptr->BFSprev = nullptr;
-		ptr = ptr->next;
-	}
-}
-*/
 
 int GraphAsListsInt::findLeastNodesPathBFS(int a, int b) { // jun 2 2020.
 	LinkedNodeInt* first = nullptr, *last = nullptr;
@@ -738,11 +729,14 @@ int GraphAsListsInt::findLeastNodesPathBFS(int a, int b) { // jun 2 2020.
 	if (first == last)
 		return 0;
 
-	// setPrevForAllNodes(nullptr);
+#if PREV_POINTER
+	setPrevForAllNodes(nullptr);
+#endif
+	
 	return findLeastNodesPathBFS(first, last);
 }
 
-/*
+#if PREV_POINTER
 int GraphAsListsInt::findLeastNodesPathBFS(LinkedNodeInt* start, LinkedNodeInt* last) { // jun 2 2020.
 	QueueAsArrayLinkedNodeInt queue(nodeNum);
 
@@ -774,7 +768,7 @@ int GraphAsListsInt::findLeastNodesPathBFS(LinkedNodeInt* start, LinkedNodeInt* 
 	
 	return length;
 }
-*/
+#endif
 
 int GraphAsListsInt::findLeastNodesPathBFS(LinkedNodeInt* start, LinkedNodeInt* last) { // jun 2 2020.
 	setStatusForAllNodes(-1);
@@ -799,29 +793,11 @@ int GraphAsListsInt::findLeastNodesPathBFS(LinkedNodeInt* start, LinkedNodeInt* 
 	return -1;
 }
 
-/*
-int GraphAsListsInt::FindMax(char* airport) { // januar 2017.
-	int max = 0;
-	LinkedNodeInt* port = findNode(airport);
-	setStatusForAllNodes(INT_MAX);
-	port->status = INT_MAX;
-	updateDistanceFrom(port, 0);
-	LinkedNodeInt* ptr = start;
-	while (ptr) {
-		if (ptr != port && ptr->status != INT_MAX && ptr->status > max)
-			max = ptr->status;
-
-		ptr = ptr->next;
-	}
-	return max;
-}
-*/
-
 int GraphAsListsInt::FindMax(/* char* */ int airport) { // januar 2017.
-	return updateDistanceFromBFS(findNode(airport));
+	return updateDistanceFromNodeBFS(findNode(airport));
 }
 
-int GraphAsListsInt::updateDistanceFromBFS(LinkedNodeInt* node) { // januar 2017.
+int GraphAsListsInt::updateDistanceFromNodeBFS(LinkedNodeInt* node) { // januar 2017.
 	setStatusForAllNodes(-1);
 	int max = 0;
 	QueueAsArrayLinkedNodeInt queue(nodeNum);
@@ -847,13 +823,39 @@ int GraphAsListsInt::updateDistanceFromBFS(LinkedNodeInt* node) { // januar 2017
 	return max;
 }
 
-void GraphAsListsInt::updateDistanceFromDFS(LinkedNodeInt* node, int depth) { // januar 2017.
+void GraphAsListsInt::updateDistanceFromNodeDFS(LinkedNodeInt* node, int depth) { // januar 2017.
 	if (depth < node->status) {
 		node->status = depth;
 		LinkedEdgeInt* edge = node->adj;
 		while (edge != nullptr) {
-			updateDistanceFromDFS(edge->dest, depth + 1);
+			updateDistanceFromNodeDFS(edge->dest, depth + 1);
 			edge = edge->link;
 		}
+	}
+}
+
+bool GraphAsListsInt::wordExists(char* wordToFind) { // popravni 2. kolokvijum 2015.
+	LinkedNodeInt* ptr = start;
+	while (ptr) {
+		if (ptr->node == wordToFind[0] - '0') {
+			bool exists = false;
+			wordExists(ptr, wordToFind, 1, exists);
+			if (exists)
+				return true;
+		}
+		ptr = ptr->next;
+	}
+	return false;
+}
+
+void GraphAsListsInt::wordExists(LinkedNodeInt* node, char* wordToFind, int depth, bool& exists) { // popravni 2. kolokvijum 2015.
+	LinkedEdgeInt* edge = node->adj;
+	while (edge && !exists) {
+		if (wordToFind[depth] == '\0')
+			exists = true;
+		if (edge->dest->node == wordToFind[depth] - '0') {
+			wordExists(edge->dest, wordToFind, depth + 1, exists);
+		}
+		edge = edge->link;
 	}
 }
