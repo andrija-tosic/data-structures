@@ -43,7 +43,7 @@
     </ul>
     <li>Grafovi</li>
         <ul>
-            <li>Dinamička implementacija usmerenog težinskog grafa</li>
+            <li>Dinamička implementacija usmerenog težinskog grafa listom susedstva</li>
         </ul>
 </ol>
 
