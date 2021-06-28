@@ -34,7 +34,7 @@ void Update(int val, int add) {
 }
 
 
-Node* maxSum(Node* p, int& maxS) { // ovo ni ne radi
+Node* maxSum(Node* p, int& maxS) {
 	if (p == nullptr) {
 		maxS = -1;
 		return nullptr;
@@ -55,7 +55,7 @@ Node* maxSum(Node* p, int& maxS) { // ovo ni ne radi
 	
 	maxS = lv + rv;
 	
-	Node* maxPtr = nullptr;
+	Node* maxPtr = p;
 	
 	if (maxL > maxS) {
 		maxS = maxL;
@@ -69,13 +69,14 @@ Node* maxSum(Node* p, int& maxS) { // ovo ni ne radi
 	return maxPtr;
 }
 
-int LevelDiff(int v1, int v2) { // april 2018.
+/************* april 2018. *************/
+int LevelDiff(int v1, int v2) {
 	int l1  = -1, l2  = -1;
 	levelDiff(root, v1, v2, l1, l2, 0);
-	return a-b;
+	return abs(a-b);
 }
 
-void levelDiff(Node* p, int v1, int v2, int& l1, int& l2, int d) { // april 2018.
+void levelDiff(Node* p, int v1, int v2, int& l1, int& l2, int d) {
 	if (!p)
 		return;
 	
@@ -93,7 +94,8 @@ void levelDiff(Node* p, int v1, int v2, int& l1, int& l2, int d) { // april 2018
 	}
 }
 
- int Sum(Node* p, int min, int max, int d) { // decembar 2017.
+/************* decembar 2017. *************/
+int Sum(Node* p, int min, int max, int d) {
  	if (!p)
  		return 0;
  		
@@ -107,3 +109,72 @@ void levelDiff(Node* p, int v1, int v2, int& l1, int& l2, int d) { // april 2018
  	
  	return s;
  }
+
+/************* oktobar 2020. *************/
+int findMaxPathLeaf(BSTNode* root, BSTNode** leaf) {	int maxSum;
+	findMaxPathLeaf(root, leaf, 0, maxSum);
+	return maxSum;
+}
+
+void findMaxPathLeaf(BSTNode* node, BSTNode** leaf, int sum, int& maxSum) {.
+	if (!node)
+		return;
+	
+	if (!(node->left) && !(node->right)) {
+		sum += node->key;
+		if (sum > maxSum) {
+			maxSum = sum;
+			leaf = &node;
+		}
+	}
+	
+	findMaxPathLeaf(node->left, leaf, sum, maxSum);
+	findMaxPathLeaf(node->right, leaf, sum, maxSum);
+}
+
+/************* oktobar 2 2018. *************/
+int maxLvlNodes(Node* node, int* count) {
+	int maxLvl = -1;
+	int* levels = new int[height()];
+	maxLvlNodes(node, maxLvl, levels, 0);
+	*count = levels[maxLvl];
+	delete[] levels;
+	return maxLvl;
+}
+
+void maxLvlNodes(Node* node, int& maxLvl, int levels[], int d) {
+	if (!node)
+		return;
+		
+	levels[d]++;
+	
+	if (levels[d] > levels[maxLvl]) {
+		maxLvl = d;
+	}
+	
+	maxLvlNodes(node->left, maxCount, maxLvl, levels, d+1);
+	maxLvlNodes(node->right, maxCount, maxLvl, levels, d+1);
+}
+
+/************* 2. kolokvijum 2014. *************/
+int deleteRightLeaves(BSTNode* p) {
+	int count = 0;
+	deleteRightLeaves(root, nullptr, count);
+	return count
+}
+
+BSTNode* deleteRightLeaves(BSTNode* p, BSTNode* par, int& count) {
+	if (!p || !par)
+		return nullptr;
+
+	if (par->right == p && !p->left && !p->right) {
+		delete p;
+		count++;
+		return nullptr;
+	}
+
+	p->left = deleteRightLeaves(p->left, p, count);
+	p->right = deleteRightLeaves(p->right, p, count);
+
+	return p;
+}

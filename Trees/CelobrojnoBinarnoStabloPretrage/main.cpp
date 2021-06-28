@@ -70,7 +70,7 @@ int main()
 	bst3->preorder();
 
 	BSTreeInt bst4;
-
+	/*
 	bst4.insert(7);
 	bst4.insert(4);
 	bst4.insert(10);
@@ -79,8 +79,13 @@ int main()
 	bst4.insert(8);
 	bst4.insert(9);
 	bst4.insert(12);
+	*/
 
-
+	bst4.insert(2);
+	bst4.insert(3);
+	bst4.insert(0);
+	bst4.insert(-1);
+	//bst4.insert(-2);
 	std::cout << std::endl << std::endl;
 
 	std::cout << "BST4 Max width on level: " << bst4.maxWidthLevel() << std::endl;
@@ -88,11 +93,6 @@ int main()
 	std::cout << "BST4 Sum of leaves: " << bst4.sumOfLeaves() << std::endl;
 
 	
-	bst4.insert(2);
-	bst4.insert(1);
-	bst4.insert(0);
-	bst4.insert(-1);
-	bst4.insert(-2);
 	
 
 	std::cout << "BST4 Balanced: " << bst4.isBalanced() << std::endl;
@@ -146,8 +146,13 @@ int main()
 	bst7.insert(9);
 	bst7.insert(1);
 	bst7.insert(6);
-
 	
+	/*
+	bst7.insert(25);
+	bst7.insert(23);
+	bst7.insert(26);
+	*/
+
 	// bst7.insert(10);
 	
 	/*
@@ -171,6 +176,8 @@ int main()
 	// std::cout << "BST7 deepest node: " << bst7.getDeepest() << std::endl;
 
 	std::cout << "BST7 perfectly balanced? " << boolToString(bst7.balanced()) << std::endl;
+
+	std::cout << "BST7 maxSum: " << bst7.maxSum() << std::endl;
 
 	return 0;
 }

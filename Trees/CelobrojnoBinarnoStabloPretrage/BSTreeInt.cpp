@@ -243,10 +243,7 @@ unsigned BSTreeInt::height(BSTNodeInt* node) const {
 		return 0;
 	}
 
-	if (height(node->left) > height(node->right))
-		return 1 + height(node->left);
-	else
-		return 1 + height(node->right);
+	return 1 + max(height(node->left), height(node->right));
 }
 
 unsigned BSTreeInt::weight() const {
@@ -303,33 +300,30 @@ void BSTreeInt::merge(BSTreeInt* merged, BSTNodeInt* node1, BSTNodeInt* node2) {
 	}	
 }
 
-int indexOfMax(int* arr, int n) {
-	int maxi = 0;
-
-	for (int i = 0; i < n; i++)
-		if (arr[i] > arr[maxi])
-			maxi = i;
-
-	return maxi;
-}
-
 int BSTreeInt::maxWidthLevel() {
-	int* levels = new int[height()]();
-	maxWidthLevel(root, 0, levels);
-	int i = indexOfMax(levels, height());
+	int maxLvl = -1;
+	int* levels = new int[height()];
+	int count;
+	maxWidthLevel(root, count, maxLvl, levels, 0);
 	delete[] levels;
-	return i;
+	return maxLvl;
 }
 
-void BSTreeInt::maxWidthLevel(BSTNodeInt* node, int level, int* levels) {
-	if (node == nullptr)
+void BSTreeInt::maxWidthLevel(BSTNodeInt* node, int& maxCount, int& maxLvl, int levels[], int d) {
+	if (!node)
 		return;
 
-	levels[level]++;
+	levels[d]++;
 
-	maxWidthLevel(node->left, level + 1, levels);
-	maxWidthLevel(node->right, level + 1, levels);
+	if (levels[d] > maxCount) {
+		maxCount = levels[d];
+		maxLvl = d;
+	}
+
+	maxWidthLevel(node->left, maxCount, maxLvl, levels, d + 1);
+	maxWidthLevel(node->right, maxCount, maxLvl, levels, d + 1);
 }
+
 
 int BSTreeInt::sumOfLeaves() {
 	return sumOfLeaves(root);
@@ -431,7 +425,8 @@ void BSTreeInt::balance(int* arr, int first, int last) {
 
 void BSTreeInt::topmostNoChildren(int* resultLevel) {
 	*resultLevel = INT_MAX;
-	topmostNoChildren(root, 0, nullptr, resultLevel);
+	BSTNodeInt* result = nullptr;
+	topmostNoChildren(root, 0, &result, resultLevel);
 }
 
 void BSTreeInt::topmostNoChildren(BSTNodeInt* root, int level, BSTNodeInt** result, int* resultLevel)
@@ -441,7 +436,7 @@ void BSTreeInt::topmostNoChildren(BSTNodeInt* root, int level, BSTNodeInt** resu
 
 	if (root->left == nullptr && root->right == nullptr && level < *resultLevel) {
 		*resultLevel = level;
-		result = &root;
+		*result = root;
 	}
 	else {
 		topmostNoChildren(root->left, level + 1, result, resultLevel);
@@ -525,10 +520,11 @@ bool BSTreeInt::balanced() { // 2. kolokvijum 2014.
 	return bal;
 }
 int BSTreeInt::count(BSTNodeInt* node, bool& bal) { // 2. kolokvijum 2014.
-	if (bal) {
-		if (!node)
-			return 0;
-
+	
+	if (!node || !bal) {
+		return 0;
+	}
+	else {
 		int l = 0, r = 0;
 		l = count(node->left, bal);
 		r = count(node->right, bal);
@@ -536,6 +532,47 @@ int BSTreeInt::count(BSTNodeInt* node, bool& bal) { // 2. kolokvijum 2014.
 		bal = d <= 1;
 		return 1 + count(node->left, bal) + count(node->right, bal);
 	}
-	else
-		return 0;
+}
+
+int BSTreeInt::maxSum() {
+	int maxS;
+	BSTNodeInt* node = maxSum(root, maxS);
+	if (node)
+		return maxSum(root, maxS)->key;
+	else return -1;
+}
+
+BSTNodeInt* BSTreeInt::maxSum(BSTNodeInt* p, int& maxS) {
+	if (p == nullptr) {
+		maxS = -1;
+		return nullptr;
+	}
+
+	int maxL, maxR;
+
+	BSTNodeInt* ptrL = maxSum(p->left, maxL);
+	BSTNodeInt* ptrR = maxSum(p->right, maxR);
+
+	int lv = 0, rv = 0;
+
+	if (p->left != nullptr)
+		lv = p->left->key;
+
+	if (p->right != nullptr)
+		rv = p->right->key;
+
+	maxS = lv + rv;
+
+	BSTNodeInt* maxPtr = p;
+
+	if (maxL > maxS) {
+		maxS = maxL;
+		maxPtr = ptrL;
+	}
+
+	if (maxR > maxS) {
+		maxS = maxR;
+		maxPtr = ptrR;
+	}
+	return maxPtr;
 }

@@ -20,7 +20,11 @@ protected:
 	unsigned weight(BSTNodeInt* node) const;
 	BSTNodeInt* deleteLeaves(BSTNodeInt* node);
 	static void merge(BSTreeInt* merged, BSTNodeInt* node1, BSTNodeInt* node2);
-	void maxWidthLevel(BSTNodeInt* node, int level, int* levels);
+public:
+	int maxWidthLevel();
+private:
+	void maxWidthLevel(BSTNodeInt* node, int& maxCount, int& maxLvl, int levels[], int d);
+public:
 	int sumOfLeaves(BSTNodeInt* node);
 	bool isBalanced(BSTNodeInt* node);
 	int maxDifference(int& maxDif, BSTNodeInt* node);
@@ -54,7 +58,6 @@ public:
 	unsigned weight() const;
 	void deleteLeaves();
 	static BSTreeInt* merge(BSTreeInt* tree1, BSTreeInt* tree2);
-	int maxWidthLevel();
 	int sumOfLeaves();
 	bool isBalanced();
 	int maxDifference(int& maxDif);
@@ -84,4 +87,8 @@ public:
 	bool balanced();// 2. kolokvijum 2014.
 private:
 	int count(BSTNodeInt* node, bool& bal); // 2. kolokvijum 2014.
+public:
+	int maxSum();
+private:
+	BSTNodeInt* maxSum(BSTNodeInt* p, int& maxS);
 };

@@ -524,7 +524,7 @@ LinkedNodeInt* GraphAsListsInt::FindMaxReachable() // 2. kolokvijum 2017.
 	int max = 0;
 	LinkedNodeInt* ptr = start;
 	while (ptr != nullptr) {
-		ptr->status = 0;
+		setStatusForAllNodes(0);
 		int a = FindMaxReachable(ptr);
 
 		if (a > max) {
@@ -541,18 +541,15 @@ int GraphAsListsInt::FindMaxReachable(LinkedNodeInt* node) { // 2. kolokvijum 20
 
 	int br = 0;
 
-	if (node == nullptr)
-		return br;
-
-	if (node->status == 0) {
-		node->status = 1;
-		LinkedEdgeInt* edge = node->adj;
-		while (edge != nullptr) {
+	LinkedEdgeInt* edge = node->adj;
+	while (edge != nullptr) {
+		if (edge->dest->status == 0) {
+			edge->dest->status = 1;
 			br += FindMaxReachable(edge->dest);
 			edge = edge->link;
 		}
-		br++;
 	}
+	br++;
 	return br;
 }
 
