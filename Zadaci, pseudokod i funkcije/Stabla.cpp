@@ -240,3 +240,21 @@ int getDeepest(BSTNode* node, BSTNode** deepest, int depth) {
 	return m;
 }
 
+int maxNode(Node* p, int& maxN, int& maxDiff) {
+	if (!p)
+		return 0;
+	
+	int l, r; // count left, count right
+	int maxL, maxR;
+	l = maxNode(p->left, maxN, maxDiff);
+	r = maxNode(p->right, maxN, maxDiff);
+	
+	int diff = abs(l-r);
+	
+	if (diff > maxDiff) {
+		maxDiff = diff;
+		maxN = p->info;
+	}
+	
+	return 1 + l + r;
+}
