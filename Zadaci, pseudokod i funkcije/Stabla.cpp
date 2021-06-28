@@ -111,12 +111,13 @@ int Sum(Node* p, int min, int max, int d) {
  }
 
 /************* oktobar 2020. *************/
-int findMaxPathLeaf(BSTNode* root, BSTNode** leaf) {	int maxSum;
+int findMaxPathLeaf(BSTNode* root, BSTNode** leaf) {
+	int maxSum;
 	findMaxPathLeaf(root, leaf, 0, maxSum);
 	return maxSum;
 }
 
-void findMaxPathLeaf(BSTNode* node, BSTNode** leaf, int sum, int& maxSum) {.
+void findMaxPathLeaf(BSTNode* node, BSTNode** leaf, int sum, int& maxSum) {
 	if (!node)
 		return;
 	
@@ -124,7 +125,7 @@ void findMaxPathLeaf(BSTNode* node, BSTNode** leaf, int sum, int& maxSum) {.
 		sum += node->key;
 		if (sum > maxSum) {
 			maxSum = sum;
-			leaf = &node;
+			*leaf = node;
 		}
 	}
 	
@@ -178,3 +179,64 @@ BSTNode* deleteRightLeaves(BSTNode* p, BSTNode* par, int& count) {
 
 	return p;
 }
+
+int LevelDiff(int v1, int v2) {
+	int l1  = -1, l2  = -1;
+	levelDiff(root, v1, v2, l1, l2, 0);
+	return a-b;
+}
+
+void levelDiff(Node* p, int v1, int v2, int& l1, int& l2, int d) {
+	if (!p)
+		return;
+	
+	if (p->key == v1)
+		l1 = d;
+	
+	if (p->key == v2)
+		l2 = d;
+		
+	if (l1 != -1 && l2 != -1)
+		return;
+	else {
+		levelDiff(p->left, v1, v2, l1, l2, d+1);
+		levelDiff(p->right, v1, v2, l1, l2, d+1);
+	}
+}
+
+int Sum(Node* p, int min, int max, int d) {
+	if (!p)
+ 		return 0;
+ 		
+ 	int s = 0;
+ 	
+ 	s += Sum(p->left, min, max, d+1);
+ 	s += Sum(p->right, min, max, d+1);
+ 	
+ 	if (min < d && d < max)
+ 		s++;
+ 	
+ 	return s;
+}
+
+int getDeepest(BSTNode* node, BSTNode** deepest, int depth) {
+	if (!node)
+		return -1;
+	
+	BSTNode** dl, dr;
+	int l = getDeepest(node->left, dl, depth+1);
+	int r = getDeepest(node->right, dr, depth+1);
+	
+	*deepest = node;
+	int m = depth;
+	if (l > m) {
+		m = l;
+		deepest = dl;
+	}
+	if (r > m) {
+		m = r;
+		deepest = dr;
+	}
+	return m;
+}
+
