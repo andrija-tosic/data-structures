@@ -1,6 +1,5 @@
 # Data structures
 <h3>Strukture podataka</h3>
-<h4>Elektronski fakultet Niš</h4>
 <h4>Sadržaj</h4>
 <ol>
     <li>Polja</li>
