@@ -1,0 +1,3 @@
+Heš tablica sa spoljašnjim ulančavanjem se koristi za pamćenje podataka o domenima tako što se pamti URL (www.something.com), ime na koga je domen registrovan i registrator.
+Ažurirati klasu HashObject tako da pamti definisane podatke (atribute, konstruktore i operatore dodele i provere na jednakost) i implementirati funkcije f i g tako da ispunjavaju osnovne zahteve dobre heš funkcije.
+Radi ilustracije smatrati da je veličina tablice 64 elementa. U main funkciji dodati 10 ilustrativnih elemenata i štampati sadržaj tablice. Za datu URL adresu prikažite podatke o domenu čiji se podaci nalaze u tablici.
